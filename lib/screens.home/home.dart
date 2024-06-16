@@ -19,8 +19,7 @@ class _HomeState extends State<Home> {
             margin: const EdgeInsets.fromLTRB(30, 40, 30, 20),
             child: const Text(
               "Order Status : New",
-              style: TextStyle(
-                  fontFamily: "NT Bold", fontSize: 18, color: Colors.amber),
+              style: TextStyle(fontSize: 18, color: Colors.amber),
             ),
           ),
           Container(
@@ -73,6 +72,31 @@ class _HomeState extends State<Home> {
           ),
         ],
       )),
+    );
+  }
+}
+
+class StarCheckbox extends StatefulWidget {
+  @override
+  _StarCheckboxState createState() => _StarCheckboxState();
+}
+
+class _StarCheckboxState extends State<StarCheckbox> {
+  bool isChecked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isChecked = !isChecked;
+        });
+      },
+      child: Icon(
+        isChecked ? Icons.star : Icons.star_border,
+        color: isChecked ? Colors.amber : null,
+        size: 30.0, // ขนาดของดาว
+      ),
     );
   }
 }
@@ -836,11 +860,7 @@ class DataTable1 extends StatelessWidget {
         rows: <DataRow>[
           DataRow(
             cells: <DataCell>[
-              DataCell(Icon(
-                Icons.star,
-                color: Colors.amber,
-                size: 28,
-              )),
+              DataCell(StarCheckbox()),
               DataCell(Text('1234567890')),
               DataCell(Text('New')),
               DataCell(Text('-')),
@@ -851,24 +871,7 @@ class DataTable1 extends StatelessWidget {
           ),
           DataRow(
             cells: <DataCell>[
-              DataCell(
-                Stack(
-                  children: [
-                    Icon(
-                      Icons.star_border,
-                      color: Colors.black,
-                      size: 28,
-                    ),
-                    Positioned.fill(
-                      child: Icon(
-                        Icons.star,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              DataCell(StarCheckbox()),
               DataCell(Text('1234567890')),
               DataCell(Text('New')),
               DataCell(Text('-')),
@@ -879,24 +882,7 @@ class DataTable1 extends StatelessWidget {
           ),
           DataRow(
             cells: <DataCell>[
-              DataCell(
-                Stack(
-                  children: [
-                    Icon(
-                      Icons.star_border,
-                      color: Colors.black,
-                      size: 28,
-                    ),
-                    Positioned.fill(
-                      child: Icon(
-                        Icons.star,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              DataCell(StarCheckbox()),
               DataCell(Text('1234567890')),
               DataCell(Text('New')),
               DataCell(Text('-')),
@@ -907,24 +893,7 @@ class DataTable1 extends StatelessWidget {
           ),
           DataRow(
             cells: <DataCell>[
-              DataCell(
-                Stack(
-                  children: [
-                    Icon(
-                      Icons.star_border,
-                      color: Colors.black,
-                      size: 28,
-                    ),
-                    Positioned.fill(
-                      child: Icon(
-                        Icons.star,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              DataCell(StarCheckbox()),
               DataCell(Text('1234567890')),
               DataCell(Text('Modify')),
               DataCell(Text('-')),
@@ -935,24 +904,7 @@ class DataTable1 extends StatelessWidget {
           ),
           DataRow(
             cells: <DataCell>[
-              DataCell(
-                Stack(
-                  children: [
-                    Icon(
-                      Icons.star_border,
-                      color: Colors.black,
-                      size: 28,
-                    ),
-                    Positioned.fill(
-                      child: Icon(
-                        Icons.star,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              DataCell(StarCheckbox()),
               DataCell(Text('1234567890')),
               DataCell(Text('Modify')),
               DataCell(Text('-')),
@@ -963,24 +915,7 @@ class DataTable1 extends StatelessWidget {
           ),
           DataRow(
             cells: <DataCell>[
-              DataCell(
-                Stack(
-                  children: [
-                    Icon(
-                      Icons.star_border,
-                      color: Colors.black,
-                      size: 28,
-                    ),
-                    Positioned.fill(
-                      child: Icon(
-                        Icons.star,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              DataCell(StarCheckbox()),
               DataCell(Text('1234567890')),
               DataCell(Text('Modify')),
               DataCell(Text('-')),
@@ -991,24 +926,7 @@ class DataTable1 extends StatelessWidget {
           ),
           DataRow(
             cells: <DataCell>[
-              DataCell(
-                Stack(
-                  children: [
-                    Icon(
-                      Icons.star_border,
-                      color: Colors.black,
-                      size: 28,
-                    ),
-                    Positioned.fill(
-                      child: Icon(
-                        Icons.star,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              DataCell(StarCheckbox()),
               DataCell(Text('1234567890')),
               DataCell(Text('Terminate')),
               DataCell(Text('-')),
@@ -1019,24 +937,7 @@ class DataTable1 extends StatelessWidget {
           ),
           DataRow(
             cells: <DataCell>[
-              DataCell(
-                Stack(
-                  children: [
-                    Icon(
-                      Icons.star_border,
-                      color: Colors.black,
-                      size: 28,
-                    ),
-                    Positioned.fill(
-                      child: Icon(
-                        Icons.star,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              DataCell(StarCheckbox()),
               DataCell(Text('1234567890')),
               DataCell(Text('Reconnect')),
               DataCell(Text('-')),
@@ -1047,24 +948,7 @@ class DataTable1 extends StatelessWidget {
           ),
           DataRow(
             cells: <DataCell>[
-              DataCell(
-                Stack(
-                  children: [
-                    Icon(
-                      Icons.star_border,
-                      color: Colors.black,
-                      size: 28,
-                    ),
-                    Positioned.fill(
-                      child: Icon(
-                        Icons.star,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              DataCell(StarCheckbox()),
               DataCell(Text('1234567890')),
               DataCell(Text('Terminate')),
               DataCell(Text('-')),
@@ -1075,10 +959,7 @@ class DataTable1 extends StatelessWidget {
           ),
           DataRow(
             cells: <DataCell>[
-              DataCell(Icon(
-                Icons.star,
-                color: Colors.amber,
-              )),
+              DataCell(StarCheckbox()),
               DataCell(Text('1234567890')),
               DataCell(Text('Suspend')),
               DataCell(Text('-')),
@@ -1233,7 +1114,10 @@ class DataTable1 extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 40, 0),
-            child: Text("page"),
+            child: Text(
+              "page",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           )
         ],
       ))

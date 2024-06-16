@@ -1,5 +1,6 @@
+import 'package:dashboard/screens.home/Task.dart';
 import 'package:flutter/material.dart';
-import 'package:dashboard/screens.home/home2.dart';
+import 'package:dashboard/screens.home/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Home2(),
+      home: TaskStatus(),
     );
   }
 }

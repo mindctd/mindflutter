@@ -19,8 +19,7 @@ class _Home2State extends State<Home2> {
             padding: const EdgeInsets.fromLTRB(20, 16, 0, 16),
             child: Text(
               "Transfer Approval Task",
-              style: TextStyle(
-                  fontSize: 24, color: Colors.amber, fontFamily: 'NT'),
+              style: TextStyle(fontSize: 24, color: Colors.amber),
             ),
           ),
           backgroundColor: Color.fromARGB(255, 255, 248, 226),
