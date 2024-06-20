@@ -196,7 +196,8 @@ class DataTable1 extends StatefulWidget {
 }
 
 int list = 10;
-List<Color> rowColors = List<Color>.generate(list, (index) => Colors.white);
+List<Color> rowColors =
+    List<Color>.generate(list, (index) => Colors.transparent);
 List<bool> showIcon = List<bool>.generate(list, (index) => false);
 
 class _DataTable1State extends State<DataTable1> {
@@ -209,65 +210,74 @@ class _DataTable1State extends State<DataTable1> {
       ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(30),
           border: Border.all(
             color: Color(0xFFFECE00),
           ),
         ),
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          DataTable(
-              showCheckboxColumn: false,
-              dataRowMaxHeight: rowHeight,
-              headingRowColor: MaterialStateColor.resolveWith(
-                  (states) => Colors.grey.withOpacity(0.2)),
-              columns: const <DataColumn>[
-                DataColumn(
-                  label: Expanded(
-                    child: SizedBox(
-                      width: 1320,
-                      child: Text(
-                        'Approval Group',
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+            child: DataTable(
+                border: const TableBorder(
+                  horizontalInside: BorderSide(
+                      width: 1, color: Color.fromRGBO(254, 206, 0, 0.25)),
+                ),
+                showCheckboxColumn: false,
+                dataRowMaxHeight: rowHeight,
+                headingRowColor: MaterialStateColor.resolveWith((states) =>
+                    const Color.fromARGB(255, 198, 198, 198).withOpacity(0.2)),
+                columns: const <DataColumn>[
+                  DataColumn(
+                    label: Expanded(
+                      child: SizedBox(
+                        width: 1320,
+                        child: Text(
+                          'Approval Group',
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                DataColumn(
-                  label: Expanded(
-                    child: SizedBox(
-                      width: 76,
-                      child: Text(
-                        '',
-                        style: TextStyle(color: Colors.white),
+                  DataColumn(
+                    label: Expanded(
+                      child: SizedBox(
+                        width: 76,
+                        child: Text(
+                          '',
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-              rows: List<DataRow>.generate(
-                  10,
-                  (index) => DataRow(
-                          color: MaterialStateProperty.resolveWith((states) {
-                            return rowColors[index];
-                          }),
-                          onSelectChanged: (value) {
-                            setState(() {
-                              rowColors[index] =
-                                  rowColors[index] == Colors.white
-                                      ? Color.fromRGBO(252, 182, 0, 0.03)
-                                      : Colors.white;
-                              showIcon[index] = !showIcon[index];
-                            });
-                          },
-                          cells: [
-                            DataCell(Text('Group Marketing')),
-                            DataCell(showIcon[index]
-                                ? Icon(Icons.check)
-                                : SizedBox()),
-                          ]))),
-          Divider(),
+                ],
+                rows: List<DataRow>.generate(
+                    10,
+                    (index) => DataRow(
+                            color: MaterialStateProperty.resolveWith((states) {
+                              return rowColors[index];
+                            }),
+                            onSelectChanged: (value) {
+                              setState(() {
+                                rowColors[index] =
+                                    rowColors[index] == Colors.white
+                                        ? Color.fromRGBO(252, 182, 0, 0.03)
+                                        : Colors.white;
+                                showIcon[index] = !showIcon[index];
+                              });
+                            },
+                            cells: [
+                              DataCell(Text('Group Marketing')),
+                              DataCell(showIcon[index]
+                                  ? Icon(Icons.check)
+                                  : SizedBox()),
+                            ]))),
+          ),
+          Divider(color: Color.fromRGBO(192, 160, 1, 0.38)),
           Container(
               height: 57,
               child: Row(
