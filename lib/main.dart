@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:dashboard/screens.home/home.dart';
 import 'package:dashboard/screens.home/home2.dart';
 import 'package:dashboard/screens.home/approve_task_page.dart';
+import 'package:dashboard/screens.home/approve_table.dart';
 
 void main() {
   setupInjector();
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ApproveTaskPage(),
+      home: ApproveTable(),
     );
   }
 }
