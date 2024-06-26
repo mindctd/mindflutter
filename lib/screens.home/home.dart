@@ -1,3 +1,5 @@
+import 'package:dashboard/app_injector.dart';
+import 'package:dashboard/view_model/approve_view_model.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -8,69 +10,80 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final ApproveViewModel approveViewModel = getIt();
+  @override
+  void initState() {
+    approveViewModel.getDashBoard();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-          child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            margin: const EdgeInsets.fromLTRB(30, 40, 30, 20),
-            child: const Text(
-              "Order Status : New",
-              style: TextStyle(fontSize: 18, color: Colors.amber),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            margin: const EdgeInsets.fromLTRB(30, 22, 30, 0),
-            child: const Text(
-              'Order Type',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 8,
-                  color: Colors.black),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(30, 10, 30, 60),
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildTextContainer('New :', '8'),
-                  _buildTextContainer('Modify :', '11'),
-                  _buildTextContainer('Suspend :', '4'),
-                  _buildTextContainer('Reconnect :', '5'),
-                  _buildTextContainer('Terminate :', '5'),
-                ],
+          child: Expanded(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.fromLTRB(30, 40, 30, 20),
+              child: const Text(
+                "Order Status : New",
+                style: TextStyle(fontSize: 18, color: Colors.amber),
               ),
             ),
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            child: const Text(
-              '28 Records',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 8,
-                  color: Colors.black),
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.fromLTRB(30, 22, 30, 0),
+              child: const Text(
+                'Order Type',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 8,
+                    color: Colors.black),
+              ),
             ),
-            width: double.infinity,
-            margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: Colors.amber),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(30, 10, 30, 60),
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildTextContainer('New :', '8'),
+                      _buildTextContainer('Modify :', '11'),
+                      _buildTextContainer('Suspend :', '4'),
+                      _buildTextContainer('Reconnect :', '5'),
+                      _buildTextContainer('Terminate :', '5'),
+                    ],
+                  ),
+                ),
+              ),
             ),
-            child: DataTable1(),
-            margin: EdgeInsets.fromLTRB(30, 10, 30,
-                0), // ปรับค่า margin เพื่อให้ห่างจากขอบซ้ายและขวาทั้งคู่ละ 30
-            width: double.infinity,
-          ),
-        ],
+            Container(
+              alignment: Alignment.centerLeft,
+              child: const Text(
+                '28 Records',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 8,
+                    color: Colors.black),
+              ),
+              width: double.infinity,
+              margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: Colors.amber),
+              ),
+              child: DataTable1(),
+              margin: EdgeInsets.fromLTRB(30, 10, 30,
+                  0), // ปรับค่า margin เพื่อให้ห่างจากขอบซ้ายและขวาทั้งคู่ละ 30
+              width: double.infinity,
+            ),
+          ],
+        ),
       )),
     );
   }
