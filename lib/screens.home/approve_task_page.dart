@@ -1,4 +1,5 @@
 import 'package:dashboard/screens.home/ItemSeach.dart';
+import 'package:dashboard/screens.home/Task.dart';
 import 'package:dashboard/view_model/approve_view_model.dart';
 import 'package:flutter/material.dart';
 import '../app_injector.dart';
@@ -25,7 +26,32 @@ class _ApproveTaskPageState extends State<ApproveTaskPage> {
   @override
   void initState() {
     // TODO: implement initState
+    _approveViewModel.getApprove();
+    _approveViewModel.setDropDown();
     super.initState();
+    _approveViewModel.eventBus.on<ApproveError>().listen((event) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: Text(event.toString()),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      print(event);
+    });
+    _approveViewModel.eventBus.on<ApproveSuccess>().listen((event) {
+      print(event);
+    });
   }
 
   void _search() {
@@ -145,8 +171,8 @@ class _ApproveTaskPageState extends State<ApproveTaskPage> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0.5, 0, 0, 0),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(0.5, 0, 0, 0),
                         child: Text(
                           "Result",
                           style: TextStyle(
@@ -181,7 +207,7 @@ class _ApproveTaskPageState extends State<ApproveTaskPage> {
                     borderRadius: BorderRadius.circular(30),
                     border: Border.all(color: Colors.grey),
                     color: Colors.white),
-                child: DataTableTask(),
+                child: const DataTableTask(),
               ),
             ),
           ]),
@@ -252,8 +278,8 @@ class _DataTableTaskState extends State<DataTableTask> {
                 width: 1, color: Color.fromRGBO(255, 255, 255, 0.247)),
           ),
           dataRowMaxHeight: rowHeight,
-          headingRowColor:
-              MaterialStateColor.resolveWith((states) => Color(0xFFFAFBFE)),
+          headingRowColor: MaterialStateColor.resolveWith(
+              (states) => const Color(0xFFFAFBFE)),
           columns: const <DataColumn>[
             DataColumn(
               label: Expanded(child: SizedBox(width: 10, child: CheckBox())),
@@ -345,9 +371,9 @@ class _DataTableTaskState extends State<DataTableTask> {
           rows: <DataRow>[
             DataRow(
               cells: <DataCell>[
-                DataCell(CheckBox()),
+                const DataCell(CheckBox()),
                 DataCell(Container(
-                  child: Column(
+                  child: const Column(
                     children: [
                       Text(
                         "1.1 Check Order Information [Order No: 32102653481001 Order Type: Modify CATID: IDC00002169 Service: IDC (บจก.แพคเซิร์ฟ)]",
@@ -360,25 +386,31 @@ class _DataTableTaskState extends State<DataTableTask> {
                     ],
                   ),
                 )),
-                DataCell(Text('xxxxxxxxxx')),
-                DataCell(Text('2023-10-26')),
-                DataCell(Text('Opent')),
-                DataCell(Text('-')),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
+                const DataCell(Text('xxxxxxxxxx')),
+                const DataCell(Text('2023-10-26')),
+                const DataCell(Text('Opent')),
+                const DataCell(Text('-')),
+                DataCell(IconButton(
+                    onPressed: () {
+                      openDialog(context);
+                    },
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
               ],
             ),
             DataRow(
               cells: <DataCell>[
-                DataCell(CheckBox()),
+                const DataCell(CheckBox()),
                 DataCell(Container(
-                  child: Column(
+                  child: const Column(
                     children: [
                       Text(
                         "1.1 Check Order Information [Order No: 32102653481001 Order Type: Modify CATID: IDC00002169 Service: IDC (บจก.แพคเซิร์ฟ)]",
@@ -391,25 +423,29 @@ class _DataTableTaskState extends State<DataTableTask> {
                     ],
                   ),
                 )),
-                DataCell(Text('xxxxxxxxxx')),
-                DataCell(Text('2023-10-26')),
-                DataCell(Text('Opent')),
-                DataCell(Text('-')),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
+                const DataCell(Text('xxxxxxxxxx')),
+                const DataCell(Text('2023-10-26')),
+                const DataCell(Text('Opent')),
+                const DataCell(Text('-')),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
               ],
             ),
             DataRow(
               cells: <DataCell>[
-                DataCell(CheckBox()),
+                const DataCell(CheckBox()),
                 DataCell(Container(
-                  child: Column(
+                  child: const Column(
                     children: [
                       Text(
                         "1.1 Check Order Information [Order No: 32102653481001 Order Type: Modify CATID: IDC00002169 Service: IDC (บจก.แพคเซิร์ฟ)]",
@@ -422,25 +458,29 @@ class _DataTableTaskState extends State<DataTableTask> {
                     ],
                   ),
                 )),
-                DataCell(Text('xxxxxxxxxx')),
-                DataCell(Text('2023-10-26')),
-                DataCell(Text('Opent')),
-                DataCell(Text('-')),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
+                const DataCell(Text('xxxxxxxxxx')),
+                const DataCell(Text('2023-10-26')),
+                const DataCell(Text('Opent')),
+                const DataCell(Text('-')),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
               ],
             ),
             DataRow(
               cells: <DataCell>[
-                DataCell(CheckBox()),
+                const DataCell(CheckBox()),
                 DataCell(Container(
-                  child: Column(
+                  child: const Column(
                     children: [
                       Text(
                         "1.1 Check Order Information [Order No: 32102653481001 Order Type: Modify CATID: IDC00002169 Service: IDC (บจก.แพคเซิร์ฟ)]",
@@ -453,25 +493,29 @@ class _DataTableTaskState extends State<DataTableTask> {
                     ],
                   ),
                 )),
-                DataCell(Text('xxxxxxxxxx')),
-                DataCell(Text('2023-10-26')),
-                DataCell(Text('Opent')),
-                DataCell(Text('-')),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
+                const DataCell(Text('xxxxxxxxxx')),
+                const DataCell(Text('2023-10-26')),
+                const DataCell(Text('Opent')),
+                const DataCell(Text('-')),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
               ],
             ),
             DataRow(
               cells: <DataCell>[
-                DataCell(CheckBox()),
+                const DataCell(CheckBox()),
                 DataCell(Container(
-                  child: Column(
+                  child: const Column(
                     children: [
                       Text(
                         "1.1 Check Order Information [Order No: 32102653481001 Order Type: Modify CATID: IDC00002169 Service: IDC (บจก.แพคเซิร์ฟ)]",
@@ -484,25 +528,29 @@ class _DataTableTaskState extends State<DataTableTask> {
                     ],
                   ),
                 )),
-                DataCell(Text('xxxxxxxxxx')),
-                DataCell(Text('2023-10-26')),
-                DataCell(Text('Opent')),
-                DataCell(Text('-')),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
+                const DataCell(Text('xxxxxxxxxx')),
+                const DataCell(Text('2023-10-26')),
+                const DataCell(Text('Opent')),
+                const DataCell(Text('-')),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
               ],
             ),
             DataRow(
               cells: <DataCell>[
-                DataCell(CheckBox()),
+                const DataCell(CheckBox()),
                 DataCell(Container(
-                  child: Column(
+                  child: const Column(
                     children: [
                       Text(
                         "1.1 Check Order Information [Order No: 32102653481001 Order Type: Modify CATID: IDC00002169 Service: IDC (บจก.แพคเซิร์ฟ)]",
@@ -515,25 +563,29 @@ class _DataTableTaskState extends State<DataTableTask> {
                     ],
                   ),
                 )),
-                DataCell(Text('xxxxxxxxxx')),
-                DataCell(Text('2023-10-26')),
-                DataCell(Text('Opent')),
-                DataCell(Text('-')),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
+                const DataCell(Text('xxxxxxxxxx')),
+                const DataCell(Text('2023-10-26')),
+                const DataCell(Text('Opent')),
+                const DataCell(Text('-')),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
               ],
             ),
             DataRow(
               cells: <DataCell>[
-                DataCell(CheckBox()),
+                const DataCell(CheckBox()),
                 DataCell(Container(
-                  child: Column(
+                  child: const Column(
                     children: [
                       Text(
                         "1.1 Check Order Information [Order No: 32102653481001 Order Type: Modify CATID: IDC00002169 Service: IDC (บจก.แพคเซิร์ฟ)]",
@@ -546,25 +598,29 @@ class _DataTableTaskState extends State<DataTableTask> {
                     ],
                   ),
                 )),
-                DataCell(Text('xxxxxxxxxx')),
-                DataCell(Text('2023-10-26')),
-                DataCell(Text('Opent')),
-                DataCell(Text('-')),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
+                const DataCell(Text('xxxxxxxxxx')),
+                const DataCell(Text('2023-10-26')),
+                const DataCell(Text('Opent')),
+                const DataCell(Text('-')),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
               ],
             ),
             DataRow(
               cells: <DataCell>[
-                DataCell(CheckBox()),
+                const DataCell(CheckBox()),
                 DataCell(Container(
-                  child: Column(
+                  child: const Column(
                     children: [
                       Text(
                         "1.1 Check Order Information [Order No: 32102653481001 Order Type: Modify CATID: IDC00002169 Service: IDC (บจก.แพคเซิร์ฟ)]",
@@ -577,25 +633,29 @@ class _DataTableTaskState extends State<DataTableTask> {
                     ],
                   ),
                 )),
-                DataCell(Text('xxxxxxxxxx')),
-                DataCell(Text('2023-10-26')),
-                DataCell(Text('Opent')),
-                DataCell(Text('-')),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
+                const DataCell(Text('xxxxxxxxxx')),
+                const DataCell(Text('2023-10-26')),
+                const DataCell(Text('Opent')),
+                const DataCell(Text('-')),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
               ],
             ),
             DataRow(
               cells: <DataCell>[
-                DataCell(CheckBox()),
+                const DataCell(CheckBox()),
                 DataCell(Container(
-                  child: Column(
+                  child: const Column(
                     children: [
                       Text(
                         "1.1 Check Order Information [Order No: 32102653481001 Order Type: Modify CATID: IDC00002169 Service: IDC (บจก.แพคเซิร์ฟ)]",
@@ -608,25 +668,29 @@ class _DataTableTaskState extends State<DataTableTask> {
                     ],
                   ),
                 )),
-                DataCell(Text('xxxxxxxxxx')),
-                DataCell(Text('2023-10-26')),
-                DataCell(Text('Opent')),
-                DataCell(Text('-')),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
+                const DataCell(Text('xxxxxxxxxx')),
+                const DataCell(Text('2023-10-26')),
+                const DataCell(Text('Opent')),
+                const DataCell(Text('-')),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
               ],
             ),
             DataRow(
               cells: <DataCell>[
-                DataCell(CheckBox()),
+                const DataCell(CheckBox()),
                 DataCell(Container(
-                  child: Column(
+                  child: const Column(
                     children: [
                       Text(
                         "1.1 Check Order Information [Order No: 32102653481001 Order Type: Modify CATID: IDC00002169 Service: IDC (บจก.แพคเซิร์ฟ)]",
@@ -639,24 +703,28 @@ class _DataTableTaskState extends State<DataTableTask> {
                     ],
                   ),
                 )),
-                DataCell(Text('xxxxxxxxxx')),
-                DataCell(Text('2023-10-26')),
-                DataCell(Text('Opent')),
-                DataCell(Text('-')),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
-                DataCell(Icon(
-                  Icons.insert_page_break_outlined,
-                  color: Colors.amber,
-                )),
+                const DataCell(Text('xxxxxxxxxx')),
+                const DataCell(Text('2023-10-26')),
+                const DataCell(Text('Opent')),
+                const DataCell(Text('-')),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
+                DataCell(IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.insert_page_break_outlined,
+                      color: Colors.amber,
+                    ))),
               ],
             ),
           ],
         ),
       ),
-      Divider(),
+      const Divider(),
       Container(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -664,14 +732,15 @@ class _DataTableTaskState extends State<DataTableTask> {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Color(0xFFFECE00)), // เพิ่มเส้นขอบ
+              border:
+                  Border.all(color: const Color(0xFFFECE00)), // เพิ่มเส้นขอบ
             ),
             child: ClipRRect(
               borderRadius:
                   BorderRadius.circular(10), // กำหนดให้มีโค้งตามต้องการ
               child: TextButton(
                 onPressed: () {},
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back_ios_new_rounded,
                   color: Color(0xFFFECE00),
                 ),
@@ -683,28 +752,28 @@ class _DataTableTaskState extends State<DataTableTask> {
               children: [
                 TextButton(
                   onPressed: () {},
-                  child: Text("1"),
+                  child: const Text("1"),
                 ),
                 TextButton(
                   onPressed: () {},
-                  child: Text("2"),
+                  child: const Text("2"),
                 ),
                 TextButton(
                   onPressed: () {},
-                  child: Text("3"),
+                  child: const Text("3"),
                 ),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    border:
-                        Border.all(color: Color(0xFFFECE00)), // เพิ่มเส้นขอบ
+                    border: Border.all(
+                        color: const Color(0xFFFECE00)), // เพิ่มเส้นขอบ
                   ),
                   child: ClipRRect(
                     borderRadius:
                         BorderRadius.circular(10), // กำหนดให้มีโค้งตามต้องการ
                     child: TextButton(
                       onPressed: () {},
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_forward_ios_rounded,
                         color: Color(0xFFFECE00),
                       ),
@@ -725,12 +794,12 @@ class _DataTableTaskState extends State<DataTableTask> {
                   border:
                       Border.all(color: Colors.amber), // เพิ่มเส้นขอบสีเหลือง
                 ),
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   vertical: 2,
                   horizontal: 22,
                 ), // เพิ่มระยะห่างของข้อความ
 
-                child: Text(
+                child: const Text(
                   '10 / Page',
                   style: TextStyle(
                     color: Colors.black,
@@ -744,9 +813,9 @@ class _DataTableTaskState extends State<DataTableTask> {
           Padding(
               padding: const EdgeInsets.all(0.12),
               child: Container(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                     vertical: 8, horizontal: 16), // เพิ่มระยะห่างของข้อความ
-                child: Text(
+                child: const Text(
                   'Go to',
                   style: TextStyle(
                     color: Colors.black,
@@ -754,7 +823,7 @@ class _DataTableTaskState extends State<DataTableTask> {
                   ),
                 ),
               )),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
           Padding(
@@ -768,11 +837,11 @@ class _DataTableTaskState extends State<DataTableTask> {
                   border:
                       Border.all(color: Colors.amber), // เพิ่มเส้นขอบสีเหลือง
                 ),
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   vertical: 8,
                   horizontal: 16,
                 ), // เพิ่มระยะห่างของข้อความ
-                child: TextField(
+                child: const TextField(
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: '', // ใส่ข้อความ placeholder ที่คุณต้องการ
@@ -789,8 +858,8 @@ class _DataTableTaskState extends State<DataTableTask> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 40, 0),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
             child: Text(
               "Page",
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -817,7 +886,7 @@ class _CheckBoxState extends State<CheckBox> {
     return Theme(
       data: Theme.of(context).copyWith(
         checkboxTheme: CheckboxThemeData(
-          side: BorderSide(color: Colors.amber, width: 1),
+          side: const BorderSide(color: Colors.amber, width: 1),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4.0), // กำหนดความโค้งที่นี่
           ),
@@ -837,4 +906,8 @@ class _CheckBoxState extends State<CheckBox> {
       ),
     );
   }
+}
+
+Future<void> openDialog(BuildContext context) async {
+  await showDialog(context: context, builder: (context) => const TaskStatus());
 }

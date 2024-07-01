@@ -1,12 +1,15 @@
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
-import 'package:dashboard/api/dashboard_api.dart';
-import 'package:dashboard/repository/dashboard/dashboard_repository.dart';
 import 'package:dashboard/view_model/approve_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'app_injector.config.dart';
+
+import 'api/approve_task_api.dart';
+import 'api/dashboard_api.dart';
+import 'app_Injector.config.dart';
+import 'repository/dashboard/approve_repository.dart';
+import 'repository/dashboard/dashboard_repository.dart';
 
 final getIt = GetIt.instance;
 @InjectableInit(
@@ -57,8 +60,11 @@ abstract class InterceptorModule {
 @module
 abstract class ApiModule {
   @singleton
-  DashboardApi settingApi(Dio dio) =>
+  DashboardApi dashboardApi(Dio dio) =>
       DashboardApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI");
+  @singleton
+  ApproveApi approveApi(Dio dio) =>
+      ApproveApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI");
 }
 
 @module
@@ -66,9 +72,13 @@ abstract class RepositoryModule {
   @singleton
   DashboardRepository dashboardRepository(DashboardApi dashboardApi) =>
       DashboardRepositoryImpl(dashboardApi);
+  @singleton
+  ApproveRepository approveRepository(ApproveApi approveapi) =>
+      ApproveRepositoryImpl(approveapi);
 }
 
 @module
 abstract class ViewModelModule {
   ApproveViewModel approveViewModel() => ApproveViewModel();
+  DashboardViewModel dashBoardViewModel() => DashboardViewModel();
 }

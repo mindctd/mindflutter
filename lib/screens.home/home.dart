@@ -13,7 +13,7 @@ class _HomeState extends State<Home> {
   final ApproveViewModel approveViewModel = getIt();
   @override
   void initState() {
-    approveViewModel.getDashBoard();
+    approveViewModel.getApprove();
     super.initState();
   }
 
@@ -50,11 +50,11 @@ class _HomeState extends State<Home> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildTextContainer('New :', '8'),
-                      _buildTextContainer('Modify :', '11'),
-                      _buildTextContainer('Suspend :', '4'),
-                      _buildTextContainer('Reconnect :', '5'),
-                      _buildTextContainer('Terminate :', '5'),
+                      Expanded(child: _buildTextContainer('New :', '8')),
+                      Expanded(child: _buildTextContainer('Modify :', '11')),
+                      Expanded(child: _buildTextContainer('Suspend :', '4')),
+                      Expanded(child: _buildTextContainer('Reconnect :', '5')),
+                      Expanded(child: _buildTextContainer('Terminate :', '5')),
                     ],
                   ),
                 ),
