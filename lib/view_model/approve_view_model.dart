@@ -1,6 +1,7 @@
 import 'package:dashboard/app_injector.dart';
 
 import 'package:dashboard/repository/dashboard/dashboard_repository.dart';
+import 'package:dashboard/repository/dashboard/inquire_repository.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
@@ -63,5 +64,28 @@ class ApproveViewModel with ChangeNotifier {
       Items(key: "ๆไฟหก", value: "ฟหฟหก"),
       Items(key: "2ฟหกก34", value: "หฟก")
     ];
+  }
+}
+
+class InquireViewModel with ChangeNotifier {
+  List<Items> statusDropdown = [];
+  EventBus eventBus = EventBus();
+  var baseUrl = "https://ntom-api.intense.co.th/OMNewAPI/";
+
+  final InquireRepository inquireRepository = getIt();
+
+  Future<void> getInquire() async {
+    final result = inquireRepository.getResponseInquire();
+
+    result.then((value) {
+      print(value);
+    }, onError: (error) {
+      eventBus.fire(ApproveError(error));
+      print("Error $error");
+    }).onError(
+      (error, stackTrace) {
+        print("error $error");
+      },
+    );
   }
 }

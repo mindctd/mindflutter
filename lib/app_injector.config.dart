@@ -52,6 +52,7 @@ _i1.GetIt $initGetIt(
       ));
   gh.singleton<_i5.DashboardApi>(() => apiModule.dashboardApi(gh<_i4.Dio>()));
   gh.singleton<_i6.ApproveApi>(() => apiModule.approveApi(gh<_i4.Dio>()));
+  gh.singleton<_i6.InquireApi>(() => apiModule.inquireApi(gh<_i4.Dio>()));
   gh.singleton<_i7.ApproveRepository>(
       () => repositoryModule.approveRepository(gh<_i6.ApproveApi>()));
   gh.singleton<_i8.DashboardRepository>(

@@ -65,6 +65,9 @@ abstract class ApiModule {
   @singleton
   ApproveApi approveApi(Dio dio) =>
       ApproveApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI");
+  @singleton
+  InquireApi inquireApi(Dio dio) =>
+      InquireApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI");
 }
 
 @module
