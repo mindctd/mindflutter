@@ -26,6 +26,7 @@ class Items {
   String? approvalStatusValue;
   String? taskType;
   String? orderId;
+  String? value;
 
   Items({this.approvalStatusValue, this.taskType, this.orderId});
 

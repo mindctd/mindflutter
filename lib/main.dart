@@ -1,6 +1,7 @@
 import 'package:dashboard/app_injector.dart';
 import 'package:dashboard/screens.home/Task.dart';
 import 'package:dashboard/screens.home/approve_task_page.dart';
+import 'package:dashboard/screens.home/inquire_task_page.dart';
 import 'package:flutter/material.dart';
 import 'package:dashboard/screens.home/home.dart';
 import 'package:dashboard/screens.home/home2.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ApproveTaskPage(),
+      home: InquireTaskPage(),
     );
   }
 }
