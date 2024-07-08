@@ -1,4 +1,5 @@
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
+import 'package:dashboard/repository/dashboard/inquire_repository.dart';
 import 'package:dashboard/view_model/approve_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -21,8 +22,10 @@ GetIt configureDependencies() => $initGetIt(getIt);
 
 // void setupInjector() {
 //   getIt.registerFactory<ApproveViewModel>(() => ApproveViewModel());
-//   getIt.registerFactory<ResponseDashboard>(() => ResponseDashboard());
+//   getIt.registerFactory<InquireViewModel>(() => InquireViewModel());
+//   getIt.registerFactory<DashboardViewModel>(() => DashboardViewModel());
 // }
+
 @module
 abstract class ThirdPartyModule {
   @singleton
@@ -78,10 +81,17 @@ abstract class RepositoryModule {
   @singleton
   ApproveRepository approveRepository(ApproveApi approveapi) =>
       ApproveRepositoryImpl(approveapi);
+  @singleton
+  InquireRepository inquireRepository(InquireApi inquireapi) =>
+      InquireRepositoryImpl(inquireapi);
 }
 
 @module
 abstract class ViewModelModule {
+  @singleton
   ApproveViewModel approveViewModel() => ApproveViewModel();
+  @singleton
   DashboardViewModel dashBoardViewModel() => DashboardViewModel();
+  @singleton
+  InquireViewModel inquireViewModel() => InquireViewModel();
 }

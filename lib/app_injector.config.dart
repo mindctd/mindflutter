@@ -14,9 +14,10 @@ import 'package:injectable/injectable.dart' as _i2;
 
 import 'api/approve_task_api.dart' as _i6;
 import 'api/dashboard_api.dart' as _i5;
-import 'app_Injector.dart' as _i9;
+import 'app_Injector.dart' as _i10;
 import 'repository/dashboard/approve_repository.dart' as _i7;
-import 'repository/dashboard/dashboard_repository.dart' as _i8;
+import 'repository/dashboard/dashboard_repository.dart' as _i9;
+import 'repository/dashboard/inquire_repository.dart' as _i8;
 import 'view_model/approve_view_model.dart' as _i3;
 
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -35,9 +36,10 @@ _i1.GetIt $initGetIt(
   final thirdPartyModule = _$ThirdPartyModule();
   final apiModule = _$ApiModule();
   final repositoryModule = _$RepositoryModule();
-  gh.factory<_i3.ApproveViewModel>(() => viewModelModule.approveViewModel());
-  gh.factory<_i3.DashboardViewModel>(
+  gh.singleton<_i3.ApproveViewModel>(() => viewModelModule.approveViewModel());
+  gh.singleton<_i3.DashboardViewModel>(
       () => viewModelModule.dashBoardViewModel());
+  gh.singleton<_i3.InquireViewModel>(() => viewModelModule.inquireViewModel());
   gh.singleton<_i4.Interceptor>(
     () => interceptorModule.prettyLoggerInterceptor(),
     instanceName: 'prettyLogger',
@@ -55,17 +57,19 @@ _i1.GetIt $initGetIt(
   gh.singleton<_i6.InquireApi>(() => apiModule.inquireApi(gh<_i4.Dio>()));
   gh.singleton<_i7.ApproveRepository>(
       () => repositoryModule.approveRepository(gh<_i6.ApproveApi>()));
-  gh.singleton<_i8.DashboardRepository>(
+  gh.singleton<_i8.InquireRepository>(
+      () => repositoryModule.inquireRepository(gh<_i6.InquireApi>()));
+  gh.singleton<_i9.DashboardRepository>(
       () => repositoryModule.dashboardRepository(gh<_i5.DashboardApi>()));
   return getIt;
 }
 
-class _$ViewModelModule extends _i9.ViewModelModule {}
+class _$ViewModelModule extends _i10.ViewModelModule {}
 
-class _$InterceptorModule extends _i9.InterceptorModule {}
+class _$InterceptorModule extends _i10.InterceptorModule {}
 
-class _$ThirdPartyModule extends _i9.ThirdPartyModule {}
+class _$ThirdPartyModule extends _i10.ThirdPartyModule {}
 
-class _$ApiModule extends _i9.ApiModule {}
+class _$ApiModule extends _i10.ApiModule {}
 
-class _$RepositoryModule extends _i9.RepositoryModule {}
+class _$RepositoryModule extends _i10.RepositoryModule {}

@@ -42,10 +42,46 @@ class Status {
 }
 
 class Data {
-  Data.fromJson(Map<String, dynamic> json) {}
+  bool? selected;
+  List<Items>? items;
+
+  Data({this.selected, this.items});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    selected = json['selected'];
+    if (json['items'] != null) {
+      items = <Items>[];
+      json['items'].forEach((v) {
+        items!.add(new Items.fromJson(v));
+      });
+    }
+  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['selected'] = this.selected;
+    if (this.items != null) {
+      data['items'] = this.items!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Items {
+  String? key;
+  String? value;
+
+  Items({this.key, this.value});
+
+  Items.fromJson(Map<String, dynamic> json) {
+    key = json['key'];
+    value = json['value'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['key'] = this.key;
+    data['value'] = this.value;
     return data;
   }
 }

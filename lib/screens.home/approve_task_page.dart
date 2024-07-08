@@ -1,8 +1,12 @@
 import 'package:dashboard/screens.home/ItemSeach.dart';
 import 'package:dashboard/screens.home/Task.dart';
 import 'package:dashboard/view_model/approve_view_model.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import '../app_injector.dart';
+import 'package:provider/provider.dart';
+
+import '../app_Injector.dart';
+import '../model/approve_task_model.dart';
 
 class ApproveTaskPage extends StatefulWidget {
   const ApproveTaskPage({super.key});
@@ -13,9 +17,9 @@ class ApproveTaskPage extends StatefulWidget {
 
 class _ApproveTaskPageState extends State<ApproveTaskPage> {
   final ApproveViewModel _approveViewModel = getIt();
+  final InquireViewModel _inquireViewModel = getIt();
   final TextEditingController _orderIdController = TextEditingController();
-  final TextEditingController _approvalStatusController =
-      TextEditingController();
+
   final List<String> types = [
     'Provisioning',
     'Package/Component Approve',
@@ -27,7 +31,8 @@ class _ApproveTaskPageState extends State<ApproveTaskPage> {
   void initState() {
     // TODO: implement initState
     _approveViewModel.getApprove();
-    _approveViewModel.setDropDown();
+    _inquireViewModel.getInquire();
+    // _approveViewModel.setDropDown();
     super.initState();
     _approveViewModel.eventBus.on<ApproveError>().listen((event) {
       showDialog<String>(
@@ -56,164 +61,192 @@ class _ApproveTaskPageState extends State<ApproveTaskPage> {
 
   void _search() {
     String orderId = _orderIdController.text.trim();
-    String approvalStatus = _approvalStatusController.text.trim();
 
     print('Order ID: $orderId');
-    print('Approval Status: $approvalStatus');
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(60),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text(
-              "Approve Task",
-              style: TextStyle(fontSize: 36, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Container(
-              padding: const EdgeInsets.all(60),
-              width: MediaQuery.of(context).size.width,
-              decoration: primaryBorder(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Standard search",
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(
-                    height: 36,
-                  ),
-                  Row(
-                    children: [
-                      ItemSearch(
-                          title: "Task type",
-                          dropdownList: types,
-                          inputType: TypeInput.itemDropDown),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      ItemSearch(
-                        title: "Order ID",
-                        inputType: TypeInput.itemTextField,
-                        controller: _orderIdController,
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      ItemSearch(
-                        title: "Approval Status",
-                        inputType: TypeInput.itemTextField,
-                        controller: _approvalStatusController,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        height: 42,
-                        width: MediaQuery.of(context).size.width * 0.1,
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            side:
-                                const BorderSide(width: 1, color: Colors.amber),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            backgroundColor: Colors.white,
-                          ),
-                          onPressed: () {},
-                          child: const Text('Clear',
-                              style:
-                                  TextStyle(fontSize: 22, color: Colors.amber)),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 18,
-                      ),
-                      Container(
-                        height: 42,
-                        width: MediaQuery.of(context).size.width * 0.1,
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: Colors.amber,
-                            side:
-                                const BorderSide(width: 1, color: Colors.amber),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                          ),
-                          onPressed: _search,
-                          child: const Text(
-                            'Search',
-                            style: TextStyle(fontSize: 22, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 60, 0, 20),
-              child: Container(
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(0.5, 0, 0, 0),
-                        child: Text(
-                          "Result",
+    return ChangeNotifierProvider(
+        create: (context) => _approveViewModel,
+        builder: (context, _) {
+          return Scaffold(
+            body: Consumer<ApproveViewModel>(builder: (context, viewModel, _) {
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(60),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Approve Task",
                           style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
+                              fontSize: 36, fontWeight: FontWeight.w700),
                         ),
-                      ),
-                      Container(
-                        height: 42,
-                        width: MediaQuery.of(context).size.width * 0.07,
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: Colors.amber,
-                            side:
-                                const BorderSide(width: 1, color: Colors.amber),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                          ),
-                          onPressed: _search,
-                          child: const Text(
-                            'Close',
-                            style: TextStyle(fontSize: 22, color: Colors.white),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(60),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: primaryBorder(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Standard search",
+                                style: TextStyle(
+                                    fontSize: 32, fontWeight: FontWeight.w700),
+                              ),
+                              const SizedBox(
+                                height: 36,
+                              ),
+                              Row(
+                                children: [
+                                  ItemSearch(
+                                      title: "Task type",
+                                      dropdownList: types,
+                                      inputType: TypeInput.itemDropDown),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  ItemSearch(
+                                    title: "Order ID",
+                                    inputType: TypeInput.itemTextField,
+                                    controller: _orderIdController,
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  // ItemSearch(
+                                  //     title: "Approval Status",
+                                  //     dropdownList: types,
+                                  //     inputType: TypeInput.itemDropDown),
+                                  Expanded(
+                                    child: ApproveDropDown(
+                                      listitem:
+                                          _approveViewModel.statusDropdown,
+                                      selectitem: _approveViewModel
+                                          .selectStatusDropDown,
+                                      callback: (value) {
+                                        _approveViewModel.setDropDown(value);
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 60,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    height: 42,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                    child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        side: const BorderSide(
+                                            width: 1, color: Colors.amber),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        backgroundColor: Colors.white,
+                                      ),
+                                      onPressed: () {},
+                                      child: const Text('Clear',
+                                          style: TextStyle(
+                                              fontSize: 22,
+                                              color: Colors.amber)),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 18,
+                                  ),
+                                  Container(
+                                    height: 42,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                    child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        backgroundColor: Colors.amber,
+                                        side: const BorderSide(
+                                            width: 1, color: Colors.amber),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                      ),
+                                      onPressed: _search,
+                                      child: const Text(
+                                        'Search',
+                                        style: TextStyle(
+                                            fontSize: 22, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ]),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0.5),
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: Colors.grey),
-                    color: Colors.white),
-                child: const DataTableTask(),
-              ),
-            ),
-          ]),
-        ),
-      ),
-    );
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 60, 0, 20),
+                          child: Container(
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.fromLTRB(0.5, 0, 0, 0),
+                                    child: Text(
+                                      "Result",
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 42,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.07,
+                                    child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        backgroundColor: Colors.amber,
+                                        side: const BorderSide(
+                                            width: 1, color: Colors.amber),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                      ),
+                                      onPressed: _search,
+                                      child: const Text(
+                                        'Close',
+                                        style: TextStyle(
+                                            fontSize: 22, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 0.5),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: Colors.grey),
+                                color: Colors.white),
+                            child: const DataTableTask(),
+                          ),
+                        ),
+                      ]),
+                ),
+              );
+            }),
+          );
+        });
   }
 }
 
@@ -910,4 +943,70 @@ class _CheckBoxState extends State<CheckBox> {
 
 Future<void> openDialog(BuildContext context) async {
   await showDialog(context: context, builder: (context) => const TaskStatus());
+}
+
+class ApproveDropDown extends StatelessWidget {
+  final List<Items>? listitem;
+  final Items? selectitem;
+  final Function(Items)? callback;
+  const ApproveDropDown({this.listitem, this.selectitem, this.callback});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Approval Status",
+            style: const TextStyle(fontSize: 18),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Container(
+            height: 48,
+            decoration: primaryBorder(radius: 12),
+            child: Center(
+                child: DropdownButtonHideUnderline(
+              child: DropdownButton2<Items>(
+                isExpanded: true,
+                hint: const Text(
+                  "Please select",
+                  style: TextStyle(fontSize: 20, color: Colors.amber),
+                ),
+                items: (listitem ?? [])
+                    .map((Items item) => DropdownMenuItem<Items>(
+                          value: item,
+                          child: Text(
+                            item.value ?? "",
+                            style: const TextStyle(
+                                fontSize: 20, color: Colors.amber),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ))
+                    .toList(),
+                value: selectitem,
+                onChanged: (Items? value) {
+                  if (value != null) callback?.call(value);
+                },
+                iconStyleData: const IconStyleData(
+                  icon: Padding(
+                    padding: EdgeInsets.only(right: 8.0),
+                    child: Icon(Icons.keyboard_arrow_down_rounded),
+                  ),
+                  iconSize: 20,
+                  iconEnabledColor: Colors.amber,
+                  iconDisabledColor: Colors.grey,
+                ),
+                menuItemStyleData: const MenuItemStyleData(
+                  padding: EdgeInsets.only(right: 14, left: 14),
+                ),
+              ),
+            )),
+          )
+        ],
+      ),
+    );
+  }
 }
