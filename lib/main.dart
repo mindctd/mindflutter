@@ -8,7 +8,7 @@ import 'package:dashboard/screens.home/home2.dart';
 import 'package:dashboard/screens.home/approve_task_page.dart';
 
 void main() {
-  // setupInjector();
+  setupInjector();
   configureDependencies();
   runApp(const MyApp());
 }
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: InquireTaskPage(),
+      home: Home(),
     );
   }
 }

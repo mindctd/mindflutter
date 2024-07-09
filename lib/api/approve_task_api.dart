@@ -3,7 +3,6 @@ import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 
 import '../model/approve_task_model.dart';
-
 part 'approve_task_api.g.dart';
 
 @RestApi()

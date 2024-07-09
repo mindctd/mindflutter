@@ -20,11 +20,11 @@ final getIt = GetIt.instance;
 )
 GetIt configureDependencies() => $initGetIt(getIt);
 
-// void setupInjector() {
-//   getIt.registerFactory<ApproveViewModel>(() => ApproveViewModel());
-//   getIt.registerFactory<InquireViewModel>(() => InquireViewModel());
-//   getIt.registerFactory<DashboardViewModel>(() => DashboardViewModel());
-// }
+void setupInjector() {
+  getIt.registerFactory<ApproveViewModel>(() => ApproveViewModel());
+  getIt.registerFactory<InquireViewModel>(() => InquireViewModel());
+  getIt.registerFactory<DashboardViewModel>(() => DashboardViewModel());
+}
 
 @module
 abstract class ThirdPartyModule {
