@@ -17,7 +17,7 @@ class ApproveError {
   ApproveError(this.error);
 }
 
-class DashboardViewModel with ChangeNotifier {
+class DashboardCountViewModel with ChangeNotifier {
   var baseUrl = "https://ntom-api.intense.co.th/OMNewAPI/";
 
   final DashboardRepository dashboardRepository = getIt();
@@ -92,6 +92,23 @@ class InquireViewModel with ChangeNotifier {
       eventBus.fire((error));
       print("Error $error");
     }).onError(
+      (error, stackTrace) {
+        print("error $error");
+      },
+    );
+  }
+}
+
+class DashboardStatusViewModel with ChangeNotifier {
+  var baseUrl = "https://ntom-api.intense.co.th/OMNewAPI/";
+
+  final DashboardRepository dashboardRepository = getIt();
+
+  Future<void> getDashBoard() async {
+    final result = dashboardRepository.getStatusDashboard();
+    result.then((value) {
+      print(value);
+    }, onError: (error) {}).onError(
       (error, stackTrace) {
         print("error $error");
       },

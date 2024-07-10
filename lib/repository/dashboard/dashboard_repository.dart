@@ -1,8 +1,11 @@
 import 'package:dashboard/api/dashboard_api.dart';
+import 'package:dashboard/model/dashboard_count_model.dart';
 import 'package:dashboard/model/dashboard_model.dart';
+import 'package:dashboard/model/dashboard_status_model.dart';
 
 abstract class DashboardRepository {
-  Future<ResponseDashboard> getResponseDashboard();
+  Future<Count> getResponseDashboard();
+  Future<Status2> getStatusDashboard();
 }
 
 class DashboardRepositoryImpl implements DashboardRepository {
@@ -10,7 +13,14 @@ class DashboardRepositoryImpl implements DashboardRepository {
   DashboardRepositoryImpl(this.responseDashboardApi);
 
   @override
-  Future<ResponseDashboard> getResponseDashboard() {
-    return responseDashboardApi.getDashboard().then((value) => value.data);
+  Future<Count> getResponseDashboard() {
+    return responseDashboardApi.getCountDashboard().then((value) => value.data);
+  }
+
+  @override
+  Future<Status2> getStatusDashboard() {
+    return responseDashboardApi
+        .getStatusDashboard()
+        .then((value) => value.data);
   }
 }

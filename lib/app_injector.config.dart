@@ -37,7 +37,7 @@ _i1.GetIt $initGetIt(
   final apiModule = _$ApiModule();
   final repositoryModule = _$RepositoryModule();
   gh.singleton<_i3.ApproveViewModel>(() => viewModelModule.approveViewModel());
-  gh.singleton<_i3.DashboardViewModel>(
+  gh.singleton<_i3.DashboardCountViewModel>(
       () => viewModelModule.dashBoardViewModel());
   gh.singleton<_i3.InquireViewModel>(() => viewModelModule.inquireViewModel());
   gh.singleton<_i4.Interceptor>(

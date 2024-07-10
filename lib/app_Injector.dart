@@ -23,7 +23,7 @@ GetIt configureDependencies() => $initGetIt(getIt);
 void setupInjector() {
   getIt.registerFactory<ApproveViewModel>(() => ApproveViewModel());
   getIt.registerFactory<InquireViewModel>(() => InquireViewModel());
-  getIt.registerFactory<DashboardViewModel>(() => DashboardViewModel());
+  getIt.registerFactory<DashboardCountViewModel>(() => DashboardCountViewModel());
 }
 
 @module
@@ -91,7 +91,7 @@ abstract class ViewModelModule {
   @singleton
   ApproveViewModel approveViewModel() => ApproveViewModel();
   @singleton
-  DashboardViewModel dashBoardViewModel() => DashboardViewModel();
+  DashboardCountViewModel dashBoardViewModel() => DashboardCountViewModel();
   @singleton
   InquireViewModel inquireViewModel() => InquireViewModel();
 }
