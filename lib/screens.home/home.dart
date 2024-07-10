@@ -10,10 +10,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final ApproveViewModel approveViewModel = getIt();
+  final DashboardCountViewModel dashboardCountViewModel = getIt();
+  final DashboardStatusViewModel dashboardStautsViewModel = getIt();
+
   @override
   void initState() {
-    approveViewModel.getApprove();
+    dashboardCountViewModel.getDashBoard();
+    dashboardStautsViewModel.getDashBoard();
+
     super.initState();
   }
 

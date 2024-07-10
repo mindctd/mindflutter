@@ -23,7 +23,7 @@ class DashboardCountViewModel with ChangeNotifier {
   final DashboardRepository dashboardRepository = getIt();
 
   Future<void> getDashBoard() async {
-    final result = dashboardRepository.getResponseDashboard();
+    final result = dashboardRepository.getCountDashboard();
     result.then((value) {
       print(value);
     }, onError: (error) {}).onError(
