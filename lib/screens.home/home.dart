@@ -1,6 +1,7 @@
 import 'package:dashboard/app_injector.dart';
 import 'package:dashboard/view_model/approve_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,8 +16,9 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    dashboardCountViewModel.getDashBoard();
-    dashboardStautsViewModel.getDashBoard();
+    Provider.of<DashboardCountViewModel>(context, listen: false).getDashBoard();
+    Provider.of<DashboardStatusViewModel>(context, listen: false)
+        .getDashBoard();
 
     super.initState();
   }
