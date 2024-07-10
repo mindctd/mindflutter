@@ -1,5 +1,4 @@
 import 'package:dashboard/model/dashboard_count_model.dart';
-import 'package:dashboard/model/dashboard_model.dart';
 import 'package:dashboard/model/dashboard_status_model.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';

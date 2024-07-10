@@ -1,5 +1,6 @@
-import 'package:dashboard/api/approve_task_api.dart';
 import 'package:dashboard/model/inquire_model.dart';
+
+import '../api/inquire_api.dart';
 
 abstract class InquireRepository {
   Future<InquireResponse> getResponseInquire();

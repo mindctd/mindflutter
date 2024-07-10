@@ -1,14 +1,11 @@
-import 'package:dashboard/app_injector.dart';
-import 'package:dashboard/screens.home/Task.dart';
-import 'package:dashboard/screens.home/approve_task_page.dart';
-import 'package:dashboard/screens.home/inquire_task_page.dart';
+
+import 'package:dashboard/screens_home/home.dart';
 import 'package:flutter/material.dart';
-import 'package:dashboard/screens.home/home.dart';
-import 'package:dashboard/screens.home/home2.dart';
-import 'package:dashboard/screens.home/approve_task_page.dart';
+
+import 'dependency_Injector.dart';
 
 void main() {
-  setupInjector();
+  // setupInjector();
   configureDependencies();
   runApp(const MyApp());
 }

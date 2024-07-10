@@ -1,6 +1,5 @@
 import 'package:dashboard/api/dashboard_api.dart';
 import 'package:dashboard/model/dashboard_count_model.dart';
-import 'package:dashboard/model/dashboard_model.dart';
 import 'package:dashboard/model/dashboard_status_model.dart';
 
 abstract class DashboardRepository {

@@ -1,6 +1,4 @@
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
-import 'package:dashboard/repository/dashboard/inquire_repository.dart';
-import 'package:dashboard/view_model/approve_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -8,23 +6,38 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'api/approve_task_api.dart';
 import 'api/dashboard_api.dart';
-import 'app_Injector.config.dart';
-import 'repository/dashboard/approve_repository.dart';
-import 'repository/dashboard/dashboard_repository.dart';
+import 'api/inquire_api.dart';
+import 'dependency_Injector.config.dart';
+import 'view_model/approve_view_model.dart';
+import 'view_model/dash_board_status_view_model.dart';
+import 'view_model/dashboard_view_model.dart';
+import 'view_model/inquire_view_model.dart';
 
-final getIt = GetIt.instance;
+final GetIt getIt = GetIt.instance;
+
+final dio = Dio();
+void setupInjector() {
+  // getIt.registerFactory<ApproveRepository>(() => ApproveRepositoryImpl(
+  //     ApproveTaskApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI")));
+  // getIt.registerFactory<InquireRepository>(() => InquireRepositoryImpl(
+  //     InquireApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI")));
+  // getIt.registerFactory<DashboardRepository>(() => DashboardRepositoryImpl(
+  //     DashboardApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI")));
+
+  // getIt.registerFactory<ApproveViewModel>(() => ApproveViewModel());
+  // getIt.registerFactory<InquireViewModel>(() => InquireViewModel());
+  // getIt.registerFactory<DashboardCountViewModel>(
+  //     () => DashboardCountViewModel());
+  // getIt.registerFactory<DashboardStatusViewModel>(
+  //     () => DashboardStatusViewModel());
+}
+
 @InjectableInit(
   initializerName: r'$initGetIt', // default
   preferRelativeImports: true, // default
   asExtension: false, // default
 )
 GetIt configureDependencies() => $initGetIt(getIt);
-
-void setupInjector() {
-  getIt.registerFactory<ApproveViewModel>(() => ApproveViewModel());
-  getIt.registerFactory<InquireViewModel>(() => InquireViewModel());
-  getIt.registerFactory<DashboardCountViewModel>(() => DashboardCountViewModel());
-}
 
 @module
 abstract class ThirdPartyModule {
@@ -66,25 +79,25 @@ abstract class ApiModule {
   DashboardApi dashboardApi(Dio dio) =>
       DashboardApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI");
   @singleton
-  ApproveApi approveApi(Dio dio) =>
-      ApproveApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI");
+  ApproveTaskApi approveApi(Dio dio) =>
+      ApproveTaskApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI");
   @singleton
   InquireApi inquireApi(Dio dio) =>
       InquireApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI");
 }
 
-@module
-abstract class RepositoryModule {
-  @singleton
-  DashboardRepository dashboardRepository(DashboardApi dashboardApi) =>
-      DashboardRepositoryImpl(dashboardApi);
-  @singleton
-  ApproveRepository approveRepository(ApproveApi approveapi) =>
-      ApproveRepositoryImpl(approveapi);
-  @singleton
-  InquireRepository inquireRepository(InquireApi inquireapi) =>
-      InquireRepositoryImpl(inquireapi);
-}
+// @module
+// abstract class RepositoryModule {
+//   @singleton
+//   DashboardRepository dashboardRepository(DashboardApi dashboardApi) =>
+//       DashboardRepositoryImpl(dashboardApi);
+//   // @singleton
+//   // ApproveRepository approveRepository(ApproveApi approveapi) =>
+//   //     ApproveRepositoryImpl(approveapi);
+//   @singleton
+//   InquireRepository inquireRepository(InquireApi inquireapi) =>
+//       InquireRepositoryImpl(inquireapi);
+// }
 
 @module
 abstract class ViewModelModule {
@@ -92,6 +105,9 @@ abstract class ViewModelModule {
   ApproveViewModel approveViewModel() => ApproveViewModel();
   @singleton
   DashboardCountViewModel dashBoardViewModel() => DashboardCountViewModel();
+  @singleton
+  DashboardStatusViewModel dashBoardStatusViewModel() =>
+      DashboardStatusViewModel();
   @singleton
   InquireViewModel inquireViewModel() => InquireViewModel();
 }

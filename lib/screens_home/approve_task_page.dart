@@ -1,23 +1,23 @@
-import 'package:dashboard/screens.home/ItemSeach.dart';
-import 'package:dashboard/screens.home/Task.dart';
+import 'package:dashboard/screens_home/ItemSeach.dart';
+import 'package:dashboard/screens_home/Task.dart';
 import 'package:dashboard/view_model/approve_view_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../app_Injector.dart';
+import '../dependency_Injector.dart';
+import '../model/approve_task_model.dart';
 
-import '../model/inquire_model.dart';
-
-class InquireTaskPage extends StatefulWidget {
-  const InquireTaskPage({super.key});
+class ApproveTaskPage extends StatefulWidget {
+  const ApproveTaskPage({super.key});
 
   @override
-  State<InquireTaskPage> createState() => _InquireTaskPageState();
+  State<ApproveTaskPage> createState() => _ApproveTaskPageState();
 }
 
-class _InquireTaskPageState extends State<InquireTaskPage> {
-  final InquireViewModel _inquireViewModel = getIt();
+class _ApproveTaskPageState extends State<ApproveTaskPage> {
+  final ApproveViewModel _approveViewModel = getIt();
+  // final InquireViewModel _inquireViewModel = getIt();
   final TextEditingController _orderIdController = TextEditingController();
 
   final List<String> types = [
@@ -30,10 +30,33 @@ class _InquireTaskPageState extends State<InquireTaskPage> {
   @override
   void initState() {
     // TODO: implement initState
-
-    _inquireViewModel.getInquire();
+    // _approveViewModel.getApprove();
+    // _inquireViewModel.getInquire();
     // _approveViewModel.setDropDown();
     super.initState();
+    // _approveViewModel.eventBus.on<ApproveError>().listen((event) {
+    //   showDialog<String>(
+    //     context: context,
+    //     builder: (BuildContext context) => AlertDialog(
+    //       title: const Text('AlertDialog Title'),
+    //       content: Text(event.toString()),
+    //       actions: <Widget>[
+    //         TextButton(
+    //           onPressed: () => Navigator.pop(context, 'Cancel'),
+    //           child: const Text('Cancel'),
+    //         ),
+    //         TextButton(
+    //           onPressed: () => Navigator.pop(context, 'OK'),
+    //           child: const Text('OK'),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    //   print(event);
+    // });
+    // _approveViewModel.eventBus.on<ApproveSuccess>().listen((event) {
+    //   print(event);
+    // });
   }
 
   void _search() {
@@ -45,10 +68,10 @@ class _InquireTaskPageState extends State<InquireTaskPage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => _inquireViewModel,
+        create: (context) => _approveViewModel,
         builder: (context, _) {
           return Scaffold(
-            body: Consumer<InquireViewModel>(builder: (context, viewModel, _) {
+            body: Consumer<ApproveViewModel>(builder: (context, viewModel, _) {
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(60),
@@ -99,8 +122,16 @@ class _InquireTaskPageState extends State<InquireTaskPage> {
                                   //     title: "Approval Status",
                                   //     dropdownList: types,
                                   //     inputType: TypeInput.itemDropDown),
-                                  Container(
-                                    child: Text("mind"),
+                                  Expanded(
+                                    child: ApproveDropDown(
+                                      listitem:
+                                          _approveViewModel.statusDropdown,
+                                      selectitem: _approveViewModel
+                                          .selectStatusDropDown,
+                                      callback: (value) {
+                                        _approveViewModel.setDropDown(value);
+                                      },
+                                    ),
                                   )
                                 ],
                               ),

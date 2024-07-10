@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class Home2 extends StatefulWidget {
@@ -15,14 +14,14 @@ class _Home2State extends State<Home2> {
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 58,
-          title: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 0, 16),
+          title: const Padding(
+            padding: EdgeInsets.fromLTRB(20, 16, 0, 16),
             child: Text(
               "Transfer Approval Task",
               style: TextStyle(fontSize: 24, color: Colors.amber),
             ),
           ),
-          backgroundColor: Color.fromARGB(255, 255, 248, 226),
+          backgroundColor: const Color.fromARGB(255, 255, 248, 226),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -42,7 +41,7 @@ class _Home2State extends State<Home2> {
                         },
                         activeColor: Colors.amber,
                       ),
-                      Text("Search by Employee"),
+                      const Text("Search by Employee"),
                       Radio(
                         value: 2,
                         groupValue: selectedRadio,
@@ -53,21 +52,21 @@ class _Home2State extends State<Home2> {
                         },
                         activeColor: Colors.amber,
                       ),
-                      Text("Search by Employee")
+                      const Text("Search by Employee")
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: Container(
                       alignment: Alignment.centerLeft,
-                      child: Text('Approval Group'),
+                      child: const Text('Approval Group'),
                     ),
                   ),
                   Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 7, 0, 0),
+                          padding: EdgeInsets.fromLTRB(0, 7, 0, 0),
                           child: TextField(
                             decoration: InputDecoration(
                               hintText: 'Please select', // ข้อความ hint
@@ -91,14 +90,14 @@ class _Home2State extends State<Home2> {
                           width: 120,
                           height: 50,
                           decoration: BoxDecoration(
-                            color: Color(0xFFFECE00),
+                            color: const Color(0xFFFECE00),
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: TextButton(
                             onPressed: () {
                               // การกดปุ่ม Search
                             },
-                            child: Text(
+                            child: const Text(
                               'Search',
                               style: TextStyle(
                                   color: Colors.white,
@@ -109,21 +108,21 @@ class _Home2State extends State<Home2> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
                     child: Divider(),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: Container(
                       alignment: Alignment.centerLeft,
-                      child: Text('Select Transfer Approaval Task'),
+                      child: const Text('Select Transfer Approaval Task'),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
                     child: Container(
-                      child: DataTable1(),
+                      child: const DataTable1(),
                     ),
                   ),
                   Padding(
@@ -137,14 +136,14 @@ class _Home2State extends State<Home2> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                                color: Color(0xFFFECE00)), // เพิ่มเส้นขอบ
+                                color: const Color(0xFFFECE00)), // เพิ่มเส้นขอบ
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(
                                 10), // กำหนดให้มีโค้งตามต้องการ
                             child: TextButton(
                               onPressed: () {},
-                              child: Text(
+                              child: const Text(
                                 "Cancel",
                                 style: TextStyle(
                                     color: Color(0xFFFECE00),
@@ -160,14 +159,14 @@ class _Home2State extends State<Home2> {
                             height: 40,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color(0xFFFECE00) // เพิ่มเส้นขอบ
+                                color: const Color(0xFFFECE00) // เพิ่มเส้นขอบ
                                 ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(
                                   10), // กำหนดให้มีโค้งตามต้องการ
                               child: TextButton(
                                 onPressed: () {},
-                                child: Text(
+                                child: const Text(
                                   'Submit',
                                   style: TextStyle(
                                       color: Colors.white,
@@ -212,7 +211,7 @@ class _DataTable1State extends State<DataTable1> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           border: Border.all(
-            color: Color(0xFFFECE00),
+            color: const Color(0xFFFECE00),
           ),
         ),
         child:
@@ -265,37 +264,37 @@ class _DataTable1State extends State<DataTable1> {
                               setState(() {
                                 rowColors[index] =
                                     rowColors[index] == Colors.white
-                                        ? Color.fromRGBO(252, 182, 0, 0.03)
+                                        ? const Color.fromRGBO(252, 182, 0, 0.03)
                                         : Colors.white;
                                 showIcon[index] = !showIcon[index];
                               });
                             },
                             cells: [
-                              DataCell(Text('Group Marketing')),
+                              const DataCell(Text('Group Marketing')),
                               DataCell(showIcon[index]
-                                  ? Icon(Icons.check)
-                                  : SizedBox()),
+                                  ? const Icon(Icons.check)
+                                  : const SizedBox()),
                             ]))),
           ),
-          Divider(color: Color.fromRGBO(192, 160, 1, 0.38)),
+          const Divider(color: Color.fromRGBO(192, 160, 1, 0.38)),
           Container(
               height: 57,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border:
-                          Border.all(color: Color(0xFFFECE00)), // เพิ่มเส้นขอบ
+                          Border.all(color: const Color(0xFFFECE00)), // เพิ่มเส้นขอบ
                     ),
                     child: ClipRRect(
                       borderRadius:
                           BorderRadius.circular(10), // กำหนดให้มีโค้งตามต้องการ
                       child: TextButton(
                         onPressed: () {},
-                        child: Icon(
+                        child: const Icon(
                           Icons.arrow_back_ios_new_rounded,
                           color: Color(0xFFFECE00),
                         ),
@@ -309,36 +308,36 @@ class _DataTable1State extends State<DataTable1> {
                         children: [
                           TextButton(
                             onPressed: () {},
-                            child: Text("1"),
+                            child: const Text("1"),
                           ),
                           TextButton(
                             onPressed: () {},
-                            child: Text("2"),
+                            child: const Text("2"),
                           ),
                           TextButton(
                             onPressed: () {},
-                            child: Text("3"),
+                            child: const Text("3"),
                           ),
                           TextButton(
                             onPressed: () {},
-                            child: Text("5..."),
+                            child: const Text("5..."),
                           ),
                           TextButton(
                             onPressed: () {},
-                            child: Text("59"),
+                            child: const Text("59"),
                           ),
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
-                                  color: Color(0xFFFECE00)), // เพิ่มเส้นขอบ
+                                  color: const Color(0xFFFECE00)), // เพิ่มเส้นขอบ
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(
                                   10), // กำหนดให้มีโค้งตามต้องการ
                               child: TextButton(
                                 onPressed: () {},
-                                child: Icon(
+                                child: const Icon(
                                   Icons.arrow_forward_ios_rounded,
                                   color: Color(0xFFFECE00),
                                 ),
