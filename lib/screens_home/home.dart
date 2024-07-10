@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(color: Colors.amber),
               ),
-              child: DataTable1(),
+              child: DataTable1(dashboardCountViewModel),
               margin: EdgeInsets.fromLTRB(30, 10, 30,
                   0), // ปรับค่า margin เพื่อให้ห่างจากขอบซ้ายและขวาทั้งคู่ละ 30
               width: double.infinity,
@@ -792,7 +792,8 @@ class CombinedValueBarChart10 extends StatelessWidget {
 }
 
 class DataTable1 extends StatelessWidget {
-  const DataTable1({super.key});
+  final DashboardCountViewModel dashboardCountViewModel;
+  const DataTable1(this.dashboardCountViewModel,{super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -887,7 +888,23 @@ class DataTable1 extends StatelessWidget {
               ),
             ),
           ],
-          rows: <DataRow>[
+          rows:
+          
+          //  (dashboardCountViewModel.listData??[]).map((e) => DataRow(
+          //         cells: [
+          //           DataCell(Text(((e.newType ?? 0).toString()))),
+          //           DataCell(Text(e['value'])),
+          //           DataCell(Text(e['vat'])),
+          //           DataCell(Text(e['total'])),
+          //           DataCell(Text(e['energy-a'])),
+          //         ],
+          //         onSelectChanged: (newValue) {
+          //           print('row 1 pressed');
+          //         },
+          //       ))
+          //   .toList()
+          
+          <DataRow>[
             DataRow(
               cells: <DataCell>[
                 DataCell(StarCheckbox()),
