@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'dependency_Injector.dart';
 
 void main() {
-  // setupInjector();
-  configureDependencies();
+  setupInjector();
+  // configureDependencies();
   runApp(const MyApp());
 }
 

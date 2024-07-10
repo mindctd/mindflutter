@@ -1,3 +1,5 @@
+
+
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -15,29 +17,24 @@ import 'view_model/inquire_view_model.dart';
 
 final GetIt getIt = GetIt.instance;
 
-final dio = Dio();
-void setupInjector() {
-  // getIt.registerFactory<ApproveRepository>(() => ApproveRepositoryImpl(
-  //     ApproveTaskApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI")));
-  // getIt.registerFactory<InquireRepository>(() => InquireRepositoryImpl(
-  //     InquireApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI")));
-  // getIt.registerFactory<DashboardRepository>(() => DashboardRepositoryImpl(
-  //     DashboardApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI")));
-
-  // getIt.registerFactory<ApproveViewModel>(() => ApproveViewModel());
-  // getIt.registerFactory<InquireViewModel>(() => InquireViewModel());
-  // getIt.registerFactory<DashboardCountViewModel>(
-  //     () => DashboardCountViewModel());
-  // getIt.registerFactory<DashboardStatusViewModel>(
-  //     () => DashboardStatusViewModel());
-}
-
 @InjectableInit(
   initializerName: r'$initGetIt', // default
   preferRelativeImports: true, // default
   asExtension: false, // default
 )
 GetIt configureDependencies() => $initGetIt(getIt);
+
+// final dio = Dio();
+void setupInjector() {
+getIt.registerLazySingleton<ApproveViewModel>(() => ApproveViewModel());
+getIt.registerLazySingleton<InquireViewModel>(() => InquireViewModel());
+getIt.registerLazySingleton<DashboardCountViewModel>(
+    () => DashboardCountViewModel());
+getIt.registerLazySingleton<DashboardStatusViewModel>(
+    () => DashboardStatusViewModel());
+    
+}
+
 
 @module
 abstract class ThirdPartyModule {

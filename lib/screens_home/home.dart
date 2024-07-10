@@ -1,7 +1,8 @@
+import 'package:dashboard/dependency_Injector.dart';
 import 'package:dashboard/view_model/dash_board_status_view_model.dart';
 import 'package:flutter/material.dart';
 
-import '../dependency_Injector.dart';
+
 import '../view_model/dashboard_view_model.dart';
 
 class Home extends StatefulWidget {
@@ -13,14 +14,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   DashboardCountViewModel dashboardCountViewModel = getIt();
-  DashboardStatusViewModel dashboardStautsViewModel = getIt();
+  // DashboardStatusViewModel dashboardStautsViewModel = getIt();
 
   @override
   void initState() {
     // Provider.of<DashboardCountViewModel>(context, listen: false).getDashBoard();
     // Provider.of<DashboardStatusViewModel>(context, listen: false)
     //     .getDashBoard();
-
+    dashboardCountViewModel.postData();
     super.initState();
   }
 
