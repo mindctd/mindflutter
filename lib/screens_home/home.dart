@@ -2,7 +2,6 @@ import 'package:dashboard/dependency_Injector.dart';
 import 'package:dashboard/view_model/dash_board_status_view_model.dart';
 import 'package:flutter/material.dart';
 
-
 import '../view_model/dashboard_view_model.dart';
 
 class Home extends StatefulWidget {
@@ -59,9 +58,13 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(child: _buildTextContainer('New :', '8')),
+                      SizedBox(width: 16),
                       Expanded(child: _buildTextContainer('Modify :', '11')),
+                      SizedBox(width: 16),
                       Expanded(child: _buildTextContainer('Suspend :', '4')),
+                      SizedBox(width: 16),
                       Expanded(child: _buildTextContainer('Reconnect :', '5')),
+                      SizedBox(width: 16),
                       Expanded(child: _buildTextContainer('Terminate :', '5')),
                     ],
                   ),
@@ -793,7 +796,7 @@ class CombinedValueBarChart10 extends StatelessWidget {
 
 class DataTable1 extends StatelessWidget {
   final DashboardCountViewModel dashboardCountViewModel;
-  const DataTable1(this.dashboardCountViewModel,{super.key});
+  const DataTable1(this.dashboardCountViewModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -889,22 +892,22 @@ class DataTable1 extends StatelessWidget {
             ),
           ],
           rows:
-          
-          //  (dashboardCountViewModel.listData??[]).map((e) => DataRow(
-          //         cells: [
-          //           DataCell(Text(((e.newType ?? 0).toString()))),
-          //           DataCell(Text(e['value'])),
-          //           DataCell(Text(e['vat'])),
-          //           DataCell(Text(e['total'])),
-          //           DataCell(Text(e['energy-a'])),
-          //         ],
-          //         onSelectChanged: (newValue) {
-          //           print('row 1 pressed');
-          //         },
-          //       ))
-          //   .toList()
-          
-          <DataRow>[
+
+              //  (dashboardCountViewModel.listData??[]).map((e) => DataRow(
+              //         cells: [
+              //           DataCell(Text(((e.newType ?? 0).toString()))),
+              //           DataCell(Text(((e.suspendType ?? 0).toString()))),
+              //           DataCell(Text(((e.reconnectType ?? 0).toString()))),
+              //           DataCell(Text(((e.terminateType ?? 0).toString()))),
+              //           DataCell(Text(((e.modifyType ?? 0).toString()))),
+              //         ],
+              //         onSelectChanged: (newValue) {
+              //           print('row 1 pressed');
+              //         },
+              //       ))
+              //   .toList()
+
+              <DataRow>[
             DataRow(
               cells: <DataCell>[
                 DataCell(StarCheckbox()),
