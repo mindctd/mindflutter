@@ -43,6 +43,7 @@ class DashboardCountViewModel with ChangeNotifier {
         final jsonResponse = json.decode(response.body);
         count = Count.fromJson(jsonResponse);
         listData = count?.data ?? [];
+        notifyListeners();
       } else {
         print('Failed to post data: ${response.statusCode}');
       }

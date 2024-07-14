@@ -1,7 +1,9 @@
 import 'package:dashboard/dependency_Injector.dart';
 import 'package:dashboard/view_model/dash_board_status_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../model/dashboard_count_model.dart';
 import '../view_model/dashboard_view_model.dart';
 
 class Home extends StatefulWidget {
@@ -20,8 +22,9 @@ class _HomeState extends State<Home> {
     // Provider.of<DashboardCountViewModel>(context, listen: false).getDashBoard();
     // Provider.of<DashboardStatusViewModel>(context, listen: false)
     //     .getDashBoard();
-    dashboardCountViewModel.postData();
+    // dashboardCountViewModel.postData();
     super.initState();
+    Provider.of<DashboardCountViewModel>(context, listen: false).postData();
   }
 
   @override
@@ -50,27 +53,45 @@ class _HomeState extends State<Home> {
                     color: Colors.black),
               ),
             ),
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 10, 30, 60),
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(child: _buildTextContainer('New :', '8')),
-                      SizedBox(width: 16),
-                      Expanded(child: _buildTextContainer('Modify :', '11')),
-                      SizedBox(width: 16),
-                      Expanded(child: _buildTextContainer('Suspend :', '4')),
-                      SizedBox(width: 16),
-                      Expanded(child: _buildTextContainer('Reconnect :', '5')),
-                      SizedBox(width: 16),
-                      Expanded(child: _buildTextContainer('Terminate :', '5')),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            Consumer<DashboardCountViewModel>(
+                builder: (context, viewModel, child) {
+              if (viewModel.listData == null) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              final data = viewModel.listData!.isNotEmpty
+                  ? viewModel.listData!.first
+                  : Data();
+
+              return Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 10, 30, 60),
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                            child: _buildTextContainer(
+                                'New :', data.newType?.toString() ?? '0')),
+                        SizedBox(width: 16),
+                        Expanded(
+                            child: _buildTextContainer('Modify :',
+                                data.modifyType?.toString() ?? '0')),
+                        SizedBox(width: 16),
+                        Expanded(
+                            child: _buildTextContainer('Suspend :',
+                                data.suspendType?.toString() ?? '0')),
+                        SizedBox(width: 16),
+                        Expanded(
+                            child: _buildTextContainer('Reconnect :',
+                                data.reconnectType?.toString() ?? '0')),
+                        SizedBox(width: 16),
+                        Expanded(
+                            child: _buildTextContainer('Terminate :',
+                                data.terminateType?.toString() ?? '0')),
+                      ],
+                    ),
+                  ));
+            }),
             Container(
               alignment: Alignment.centerLeft,
               child: const Text(
@@ -808,218 +829,215 @@ class DataTable1 extends StatelessWidget {
           topRight: Radius.circular(30),
         ),
         child: DataTable(
-          border: const TableBorder(
-            horizontalInside:
-                BorderSide(width: 1, color: Color.fromRGBO(254, 206, 0, 0.25)),
-          ),
-          dataRowMaxHeight: rowHeight,
-          headingRowColor: MaterialStateColor.resolveWith(
-              (states) => Color.fromARGB(255, 255, 183, 0)),
-          columns: const <DataColumn>[
-            DataColumn(
-              label: Expanded(
-                child: Icon(
-                  Icons.star_border,
-                  color: Colors.white,
-                  size: 28,
-                ),
-              ),
+            border: const TableBorder(
+              horizontalInside: BorderSide(
+                  width: 1, color: Color.fromRGBO(254, 206, 0, 0.25)),
             ),
-            DataColumn(
-              label: Expanded(
-                child: SizedBox(
-                  width: 100,
-                  child: Text(
-                    'Order Number',
-                    style: TextStyle(color: Colors.white),
+            dataRowMaxHeight: rowHeight,
+            headingRowColor: MaterialStateColor.resolveWith(
+                (states) => Color.fromARGB(255, 255, 183, 0)),
+            columns: const <DataColumn>[
+              DataColumn(
+                label: Expanded(
+                  child: Icon(
+                    Icons.star_border,
+                    color: Colors.white,
+                    size: 28,
                   ),
                 ),
               ),
-            ),
-            DataColumn(
-              label: Expanded(
-                child: SizedBox(
-                  width: 100,
-                  child: Text(
-                    'Order Type',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
-            DataColumn(
-              label: Expanded(
-                child: SizedBox(
-                    width: 120,
+              DataColumn(
+                label: Expanded(
+                  child: SizedBox(
+                    width: 100,
                     child: Text(
-                      'Order Sub Type',
+                      'Order Number',
                       style: TextStyle(color: Colors.white),
-                    )),
-              ),
-            ),
-            DataColumn(
-              label: Expanded(
-                child: SizedBox(
-                  width: 210,
-                  child: Text(
-                    'Customer Name',
-                    style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ),
-            ),
-            DataColumn(
-              label: Expanded(
-                child: SizedBox(
-                  width: 132,
-                  child: Text(
-                    'Billing Account Number',
-                    style: TextStyle(color: Colors.white),
+              DataColumn(
+                label: Expanded(
+                  child: SizedBox(
+                    width: 100,
+                    child: Text(
+                      'Order Type',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ),
-            ),
-            DataColumn(
-              label: Expanded(
-                child: SizedBox(
-                  width: 380,
-                  child: Text(
-                    'Item Status',
-                    style: TextStyle(color: Colors.white),
+              DataColumn(
+                label: Expanded(
+                  child: SizedBox(
+                      width: 120,
+                      child: Text(
+                        'Order Sub Type',
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ),
+              ),
+              DataColumn(
+                label: Expanded(
+                  child: SizedBox(
+                    width: 210,
+                    child: Text(
+                      'Customer Name',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-          rows:
+              DataColumn(
+                label: Expanded(
+                  child: SizedBox(
+                    width: 132,
+                    child: Text(
+                      'Billing Account Number',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+              DataColumn(
+                label: Expanded(
+                  child: SizedBox(
+                    width: 380,
+                    child: Text(
+                      'Item Status',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+            rows: (dashboardCountViewModel.listData ?? [])
+                .map((e) => DataRow(
+                      cells: [
+                        DataCell(Text(((e.newType ?? 0).toString()))),
+                        DataCell(Text(((e.suspendType ?? 0).toString()))),
+                        DataCell(Text(((e.reconnectType ?? 0).toString()))),
+                        DataCell(Text(((e.terminateType ?? 0).toString()))),
+                        DataCell(Text(((e.modifyType ?? 0).toString()))),
+                      ],
+                    ))
+                .toList()
 
-              //  (dashboardCountViewModel.listData??[]).map((e) => DataRow(
-              //         cells: [
-              //           DataCell(Text(((e.newType ?? 0).toString()))),
-              //           DataCell(Text(((e.suspendType ?? 0).toString()))),
-              //           DataCell(Text(((e.reconnectType ?? 0).toString()))),
-              //           DataCell(Text(((e.terminateType ?? 0).toString()))),
-              //           DataCell(Text(((e.modifyType ?? 0).toString()))),
-              //         ],
-              //         onSelectChanged: (newValue) {
-              //           print('row 1 pressed');
-              //         },
-              //       ))
-              //   .toList()
+            //     <DataRow>[
+            //   DataRow(
+            //     cells: <DataCell>[
+            //       DataCell(StarCheckbox()),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Text('New')),
+            //       DataCell(Text('-')),
+            //       DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Flexible(child: Inprogress())),
+            //     ],
+            //   ),
+            //   DataRow(
+            //     cells: <DataCell>[
+            //       DataCell(StarCheckbox()),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Text('New')),
+            //       DataCell(Text('-')),
+            //       DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Inprogress2()),
+            //     ],
+            //   ),
+            //   DataRow(
+            //     cells: <DataCell>[
+            //       DataCell(StarCheckbox()),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Text('New')),
+            //       DataCell(Text('-')),
+            //       DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Inprogress3()),
+            //     ],
+            //   ),
+            //   DataRow(
+            //     cells: <DataCell>[
+            //       DataCell(StarCheckbox()),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Text('Modify')),
+            //       DataCell(Text('-')),
+            //       DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Inprogress4()),
+            //     ],
+            //   ),
+            //   DataRow(
+            //     cells: <DataCell>[
+            //       DataCell(StarCheckbox()),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Text('Modify')),
+            //       DataCell(Text('-')),
+            //       DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Inprogress5()),
+            //     ],
+            //   ),
+            //   DataRow(
+            //     cells: <DataCell>[
+            //       DataCell(StarCheckbox()),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Text('Modify')),
+            //       DataCell(Text('-')),
+            //       DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Inprogress6()),
+            //     ],
+            //   ),
+            //   DataRow(
+            //     cells: <DataCell>[
+            //       DataCell(StarCheckbox()),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Text('Terminate')),
+            //       DataCell(Text('-')),
+            //       DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Inprogress7()),
+            //     ],
+            //   ),
+            //   DataRow(
+            //     cells: <DataCell>[
+            //       DataCell(StarCheckbox()),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Text('Reconnect')),
+            //       DataCell(Text('-')),
+            //       DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Inprogress8()),
+            //     ],
+            //   ),
+            //   DataRow(
+            //     cells: <DataCell>[
+            //       DataCell(StarCheckbox()),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Text('Terminate')),
+            //       DataCell(Text('-')),
+            //       DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Inprogress9()),
+            //     ],
+            //   ),
+            //   DataRow(
+            //     cells: <DataCell>[
+            //       DataCell(StarCheckbox()),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Text('Suspend')),
+            //       DataCell(Text('-')),
+            //       DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
+            //       DataCell(Text('1234567890')),
+            //       DataCell(Inprogress10()),
+            //     ],
+            //   ),
+            // ],
 
-              <DataRow>[
-            DataRow(
-              cells: <DataCell>[
-                DataCell(StarCheckbox()),
-                DataCell(Text('1234567890')),
-                DataCell(Text('New')),
-                DataCell(Text('-')),
-                DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
-                DataCell(Text('1234567890')),
-                DataCell(Flexible(child: Inprogress())),
-              ],
             ),
-            DataRow(
-              cells: <DataCell>[
-                DataCell(StarCheckbox()),
-                DataCell(Text('1234567890')),
-                DataCell(Text('New')),
-                DataCell(Text('-')),
-                DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
-                DataCell(Text('1234567890')),
-                DataCell(Inprogress2()),
-              ],
-            ),
-            DataRow(
-              cells: <DataCell>[
-                DataCell(StarCheckbox()),
-                DataCell(Text('1234567890')),
-                DataCell(Text('New')),
-                DataCell(Text('-')),
-                DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
-                DataCell(Text('1234567890')),
-                DataCell(Inprogress3()),
-              ],
-            ),
-            DataRow(
-              cells: <DataCell>[
-                DataCell(StarCheckbox()),
-                DataCell(Text('1234567890')),
-                DataCell(Text('Modify')),
-                DataCell(Text('-')),
-                DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
-                DataCell(Text('1234567890')),
-                DataCell(Inprogress4()),
-              ],
-            ),
-            DataRow(
-              cells: <DataCell>[
-                DataCell(StarCheckbox()),
-                DataCell(Text('1234567890')),
-                DataCell(Text('Modify')),
-                DataCell(Text('-')),
-                DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
-                DataCell(Text('1234567890')),
-                DataCell(Inprogress5()),
-              ],
-            ),
-            DataRow(
-              cells: <DataCell>[
-                DataCell(StarCheckbox()),
-                DataCell(Text('1234567890')),
-                DataCell(Text('Modify')),
-                DataCell(Text('-')),
-                DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
-                DataCell(Text('1234567890')),
-                DataCell(Inprogress6()),
-              ],
-            ),
-            DataRow(
-              cells: <DataCell>[
-                DataCell(StarCheckbox()),
-                DataCell(Text('1234567890')),
-                DataCell(Text('Terminate')),
-                DataCell(Text('-')),
-                DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
-                DataCell(Text('1234567890')),
-                DataCell(Inprogress7()),
-              ],
-            ),
-            DataRow(
-              cells: <DataCell>[
-                DataCell(StarCheckbox()),
-                DataCell(Text('1234567890')),
-                DataCell(Text('Reconnect')),
-                DataCell(Text('-')),
-                DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
-                DataCell(Text('1234567890')),
-                DataCell(Inprogress8()),
-              ],
-            ),
-            DataRow(
-              cells: <DataCell>[
-                DataCell(StarCheckbox()),
-                DataCell(Text('1234567890')),
-                DataCell(Text('Terminate')),
-                DataCell(Text('-')),
-                DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
-                DataCell(Text('1234567890')),
-                DataCell(Inprogress9()),
-              ],
-            ),
-            DataRow(
-              cells: <DataCell>[
-                DataCell(StarCheckbox()),
-                DataCell(Text('1234567890')),
-                DataCell(Text('Suspend')),
-                DataCell(Text('-')),
-                DataCell(Text('xxxxxxxxxxxxx xxxxxxxxxxxxx')),
-                DataCell(Text('1234567890')),
-                DataCell(Inprogress10()),
-              ],
-            ),
-          ],
-        ),
       ),
       Divider(),
       Container(
