@@ -1,5 +1,3 @@
-
-
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -24,17 +22,28 @@ final GetIt getIt = GetIt.instance;
 )
 GetIt configureDependencies() => $initGetIt(getIt);
 
-// final dio = Dio();
+final dio = Dio();
 void setupInjector() {
-getIt.registerLazySingleton<ApproveViewModel>(() => ApproveViewModel());
-getIt.registerLazySingleton<InquireViewModel>(() => InquireViewModel());
-getIt.registerLazySingleton<DashboardCountViewModel>(
-    () => DashboardCountViewModel());
-getIt.registerLazySingleton<DashboardStatusViewModel>(
-    () => DashboardStatusViewModel());
-    
-}
+  getIt.registerLazySingleton<ApproveViewModel>(() => ApproveViewModel());
+  getIt.registerLazySingleton<InquireViewModel>(() => InquireViewModel());
+  getIt.registerLazySingleton<DashboardCountViewModel>(
+      () => DashboardCountViewModel());
+  getIt.registerLazySingleton<DashboardStatusViewModel>(
+      () => DashboardStatusViewModel());
+  getIt.registerLazySingleton<DashboardApi>(() =>
+      DashboardApi(dio, baseUrl: "https://ntom-api.intense.co.th/OMNewAPI"));
 
+  dio.interceptors.add(PrettyDioLogger());
+// customization
+  dio.interceptors.add(PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      error: true,
+      compact: true,
+      maxWidth: 90));
+}
 
 @module
 abstract class ThirdPartyModule {

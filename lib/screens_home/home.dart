@@ -15,7 +15,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   DashboardCountViewModel dashboardCountViewModel = getIt();
-  // DashboardStatusViewModel dashboardStautsViewModel = getIt();
+
+  // DashboardStatusViewModel dashboardStatusViewModel = getIt();
 
   @override
   void initState() {
@@ -24,99 +25,119 @@ class _HomeState extends State<Home> {
     //     .getDashBoard();
     // dashboardCountViewModel.postData();
     super.initState();
-    Provider.of<DashboardCountViewModel>(context, listen: false).postData();
+    // dashboardCountViewModel.postData();
+    dashboardCountViewModel.getCountDashboard();
+    dashboardCountViewModel.getStatusDashboard();
+    // dashboardCountViewModel.getDashBoard();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-          child: Expanded(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.fromLTRB(30, 40, 30, 20),
-              child: const Text(
-                "Order Status : New",
-                style: TextStyle(fontSize: 18, color: Colors.amber),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.fromLTRB(30, 22, 30, 0),
-              child: const Text(
-                'Order Type',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 8,
-                    color: Colors.black),
-              ),
-            ),
-            Consumer<DashboardCountViewModel>(
-                builder: (context, viewModel, child) {
-              if (viewModel.listData == null) {
-                return Center(child: CircularProgressIndicator());
-              }
-
-              final data = viewModel.listData!.isNotEmpty
-                  ? viewModel.listData!.first
-                  : Data();
-
-              return Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 10, 30, 60),
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                            child: _buildTextContainer(
-                                'New :', data.newType?.toString() ?? '0')),
-                        SizedBox(width: 16),
-                        Expanded(
-                            child: _buildTextContainer('Modify :',
-                                data.modifyType?.toString() ?? '0')),
-                        SizedBox(width: 16),
-                        Expanded(
-                            child: _buildTextContainer('Suspend :',
-                                data.suspendType?.toString() ?? '0')),
-                        SizedBox(width: 16),
-                        Expanded(
-                            child: _buildTextContainer('Reconnect :',
-                                data.reconnectType?.toString() ?? '0')),
-                        SizedBox(width: 16),
-                        Expanded(
-                            child: _buildTextContainer('Terminate :',
-                                data.terminateType?.toString() ?? '0')),
-                      ],
+      body: ChangeNotifierProvider(
+          create: (context) => dashboardCountViewModel,
+          builder: (context, _) {
+            return SingleChildScrollView(
+                child: Expanded(
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.fromLTRB(30, 40, 30, 20),
+                    child: const Text(
+                      "Order Status : New",
+                      style: TextStyle(fontSize: 18, color: Colors.amber),
                     ),
-                  ));
-            }),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                '28 Records',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 8,
-                    color: Colors.black),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.fromLTRB(30, 22, 30, 0),
+                    child: const Text(
+                      'Order Type',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 8,
+                          color: Colors.black),
+                    ),
+                  ),
+                  Consumer<DashboardCountViewModel>(
+                      builder: (context, viewModel, child) {
+                    if (viewModel.count == null) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+
+                    return Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 10, 30, 60),
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                  child: _buildTextContainer(
+                                      'New :',
+                                      (viewModel.count?.data?[0].newType ?? 0)
+                                          .toString())),
+                              SizedBox(width: 16),
+                              Expanded(
+                                  child: _buildTextContainer(
+                                      'Modify :',
+                                      (viewModel.count?.data?[0].modifyType ??
+                                              0)
+                                          .toString())),
+                              SizedBox(width: 16),
+                              Expanded(
+                                  child: _buildTextContainer(
+                                      'Suspend :',
+                                      (viewModel.count?.data?[0].suspendType ??
+                                              0)
+                                          .toString())),
+                              SizedBox(width: 16),
+                              Expanded(
+                                  child: _buildTextContainer(
+                                      'Reconnect :',
+                                      (viewModel.count?.data?[0]
+                                                  .reconnectType ??
+                                              0)
+                                          .toString())),
+                              SizedBox(width: 16),
+                              Expanded(
+                                  child: _buildTextContainer(
+                                      'Terminate :',
+                                      (viewModel.count?.data?[0]
+                                                  .terminateType ??
+                                              0)
+                                          .toString())),
+                            ],
+                          ),
+                        ));
+                  }),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      '28 Records',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 8,
+                          color: Colors.black),
+                    ),
+                    width: double.infinity,
+                    margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(color: Colors.amber),
+                    ),
+
+                    child: DataTable1(dashboardCountViewModel),
+                    margin: EdgeInsets.fromLTRB(30, 10, 30,
+                        0), // ปรับค่า margin เพื่อให้ห่างจากขอบซ้ายและขวาทั้งคู่ละ 30
+                    width: double.infinity,
+                  ),
+                ],
               ),
-              width: double.infinity,
-              margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(color: Colors.amber),
-              ),
-              child: DataTable1(dashboardCountViewModel),
-              margin: EdgeInsets.fromLTRB(30, 10, 30,
-                  0), // ปรับค่า margin เพื่อให้ห่างจากขอบซ้ายและขวาทั้งคู่ละ 30
-              width: double.infinity,
-            ),
-          ],
-        ),
-      )),
+            ));
+          }),
     );
   }
 }
@@ -817,6 +838,7 @@ class CombinedValueBarChart10 extends StatelessWidget {
 
 class DataTable1 extends StatelessWidget {
   final DashboardCountViewModel dashboardCountViewModel;
+
   const DataTable1(this.dashboardCountViewModel, {super.key});
 
   @override
@@ -913,6 +935,7 @@ class DataTable1 extends StatelessWidget {
               ),
             ],
             rows: (dashboardCountViewModel.listData ?? [])
+                // item
                 .map((e) => DataRow(
                       cells: [
                         DataCell(Text(((e.newType ?? 0).toString()))),
