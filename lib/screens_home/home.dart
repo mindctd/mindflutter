@@ -934,15 +934,14 @@ class DataTable1 extends StatelessWidget {
                 ),
               ),
             ],
-            rows: (dashboardCountViewModel.listData ?? [])
-                // item
+            rows: (dashboardCountViewModel.listItems ?? [])
                 .map((e) => DataRow(
                       cells: [
-                        DataCell(Text(((e.newType ?? 0).toString()))),
-                        DataCell(Text(((e.suspendType ?? 0).toString()))),
-                        DataCell(Text(((e.reconnectType ?? 0).toString()))),
-                        DataCell(Text(((e.terminateType ?? 0).toString()))),
-                        DataCell(Text(((e.modifyType ?? 0).toString()))),
+                        DataCell(Text(((e.id ?? 0).toString()))),
+                        DataCell(Text(((e.orderTypeLkp ?? 0).toString()))),
+                        DataCell(Text(((e.orderSubTypeLkp ?? 0).toString()))),
+                        DataCell(Text(((e.customerFullName ?? 0).toString()))),
+                        DataCell(Text(((e.baId ?? 0).toString()))),
                       ],
                     ))
                 .toList()

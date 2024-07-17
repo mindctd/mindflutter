@@ -12,7 +12,9 @@ class DashboardCountViewModel with ChangeNotifier {
   NewSum? dataOrder;
   Data? dataCount;
   Count? count;
-
+  Items? statusItems;
+  Status2? status2;
+  List<Items>? listItems;
   List<Data>? listData;
   // List<Data>? listDataStatus;
   Summary? summary;
@@ -148,7 +150,8 @@ class DashboardCountViewModel with ChangeNotifier {
     };
     final result = dashboardRepository.getStatusDashboard(body);
     result.then((value) {
-      print(value);
+      status2 = value.data;
+      listItems = status2?.data?.items;
       notifyListeners();
     }, onError: (error) {}).onError(
       (error, stackTrace) {
