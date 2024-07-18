@@ -37,36 +37,42 @@ class _HomeState extends State<Home> {
       body: ChangeNotifierProvider(
           create: (context) => dashboardCountViewModel,
           builder: (context, _) {
-            return SingleChildScrollView(
-                child: Expanded(
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.fromLTRB(30, 40, 30, 20),
-                    child: const Text(
-                      "Order Status : New",
-                      style: TextStyle(fontSize: 18, color: Colors.amber),
+            return Consumer<DashboardCountViewModel>(
+                builder: (context, viewModel, child) {
+              if (viewModel.count == null || viewModel.status2 == null) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return SingleChildScrollView(
+                  child: Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.fromLTRB(30, 40, 30, 20),
+                      child: const Text(
+                        "Order Status : New",
+                        style: TextStyle(fontSize: 18, color: Colors.amber),
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.fromLTRB(30, 22, 30, 0),
-                    child: const Text(
-                      'Order Type',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 8,
-                          color: Colors.black),
+                    Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.fromLTRB(30, 22, 30, 0),
+                      child: const Text(
+                        'Order Type',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 8,
+                            color: Colors.black),
+                      ),
                     ),
-                  ),
-                  Consumer<DashboardCountViewModel>(
-                      builder: (context, viewModel, child) {
-                    if (viewModel.count == null) {
-                      return Center(child: CircularProgressIndicator());
-                    }
 
-                    return Padding(
+                    // Consumer<DashboardCountViewModel>(
+                    //     builder: (context, viewModel, child) {
+                    //   if (viewModel.count == null) {
+                    //     return Center(child: CircularProgressIndicator());
+                    //   }
+
+                    Padding(
                         padding: const EdgeInsets.fromLTRB(30, 10, 30, 60),
                         child: Container(
                           child: Row(
@@ -109,34 +115,35 @@ class _HomeState extends State<Home> {
                                           .toString())),
                             ],
                           ),
-                        ));
-                  }),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      '28 Records',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 8,
-                          color: Colors.black),
+                        )),
+                    // }),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: const Text(
+                        '28 Records',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 8,
+                            color: Colors.black),
+                      ),
+                      width: double.infinity,
+                      margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                     ),
-                    width: double.infinity,
-                    margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: Colors.amber),
-                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(color: Colors.amber),
+                      ),
 
-                    child: DataTable1(dashboardCountViewModel),
-                    margin: EdgeInsets.fromLTRB(30, 10, 30,
-                        0), // ปรับค่า margin เพื่อให้ห่างจากขอบซ้ายและขวาทั้งคู่ละ 30
-                    width: double.infinity,
-                  ),
-                ],
-              ),
-            ));
+                      child: DataTable1(dashboardCountViewModel),
+                      margin: EdgeInsets.fromLTRB(30, 10, 30,
+                          0), // ปรับค่า margin เพื่อให้ห่างจากขอบซ้ายและขวาทั้งคู่ละ 30
+                      width: double.infinity,
+                    ),
+                  ],
+                ),
+              ));
+            });
           }),
     );
   }
@@ -348,27 +355,79 @@ class CombinedValueBarChart2 extends StatelessWidget {
   }
 }
 
+// class Inprogress3 extends StatelessWidget {
+//   const Inprogress3({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return widget(
+//       child: Container(
+//         padding: EdgeInsets.only(top: 30),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             CombinedValueBarChart3(
+//               dataMap: {
+//                 "Flutter": 100,
+//                 "React": 60,
+//                 "Xamarin": 117,
+//                 "4": 40,
+//                 "5": 59,
+//               },
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 class Inprogress3 extends StatelessWidget {
   const Inprogress3({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CombinedValueBarChart3(
-            dataMap: {
-              "Flutter": 100,
-              "React": 60,
-              "Xamarin": 117,
-              "4": 40,
-              "5": 59,
-            },
+    return Consumer<DashboardCountViewModel>(
+      builder: (context, viewModel, child) {
+        if (viewModel.listItems == null) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        // คำนวณค่าต่างๆ
+        double newStatusSum = viewModel.listItems!
+            .fold(0, (sum, item) => sum + (item.newStatus ?? 0))
+            .toDouble();
+        double provisioningSum = viewModel.listItems!
+            .fold(0, (sum, item) => sum + (item.provisioning ?? 0))
+            .toDouble();
+        double billingSum = viewModel.listItems!
+            .fold(0, (sum, item) => sum + (item.billing ?? 0))
+            .toDouble();
+        double completeSum = viewModel.listItems!
+            .fold(0, (sum, item) => sum + (item.complete ?? 0))
+            .toDouble();
+
+        //คำนวณผลรวม
+        double totalSum =
+            newStatusSum + provisioningSum + billingSum + completeSum;
+
+        //คำนวณสัดส่วนเพื่อให้รวมกันเท่ากับ100
+        Map<String, double> dataMap = {
+          "New": (newStatusSum / totalSum) * 1,
+          "Provisioning": (provisioningSum / totalSum) * 1,
+          "Billing": (billingSum / totalSum) * 1,
+          "Complete": (completeSum / totalSum) * 1,
+        };
+
+        return Container(
+          padding: EdgeInsets.only(top: 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CombinedValueBarChart3(dataMap: dataMap),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -396,12 +455,30 @@ class CombinedValueBarChart3 extends StatelessWidget {
             int index = dataMap.keys.toList().indexOf(key);
             return Expanded(
               flex: (dataMap[key]! / totalValue * 100).toInt(),
-              child: Container(
-                height: 12,
+              child: Tooltip(
+                message: '$key : ${dataMap[key]!}',
                 decoration: BoxDecoration(
-                  color: colors[index % colors.length],
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 5,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
                 ),
-                margin: EdgeInsets.symmetric(horizontal: 0.5),
+                textStyle: TextStyle(
+                  color: Colors.black,
+                ),
+                child: Container(
+                  height: 12,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: colors[index % colors.length],
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 0.5),
+                ),
               ),
             );
           }).toList(),
@@ -844,6 +921,7 @@ class DataTable1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double rowHeight = (MediaQuery.of(context).size.height - 56) / 10;
+
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       ClipRRect(
         borderRadius: const BorderRadius.only(
@@ -903,7 +981,7 @@ class DataTable1 extends StatelessWidget {
               DataColumn(
                 label: Expanded(
                   child: SizedBox(
-                    width: 210,
+                    width: 103,
                     child: Text(
                       'Customer Name',
                       style: TextStyle(color: Colors.white),
@@ -937,11 +1015,13 @@ class DataTable1 extends StatelessWidget {
             rows: (dashboardCountViewModel.listItems ?? [])
                 .map((e) => DataRow(
                       cells: [
+                        DataCell(StarCheckbox()),
                         DataCell(Text(((e.id ?? 0).toString()))),
                         DataCell(Text(((e.orderTypeLkp ?? 0).toString()))),
                         DataCell(Text(((e.orderSubTypeLkp ?? 0).toString()))),
                         DataCell(Text(((e.customerFullName ?? 0).toString()))),
                         DataCell(Text(((e.baId ?? 0).toString()))),
+                        DataCell(Inprogress3()),
                       ],
                     ))
                 .toList()

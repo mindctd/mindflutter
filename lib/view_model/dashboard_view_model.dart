@@ -63,45 +63,45 @@ class DashboardCountViewModel with ChangeNotifier {
   //   }
   // }
 
-  Future<void> getDashBoard() async {
-    Map<String, dynamic> body = {
-      "user_id": "",
-      "billing_acc_id": "",
-      "date": "",
-      "status_order": "0001",
-      "page": 1,
-      "page_size": 10
-    };
-    final result = dashboardStatusRepository.getStatusDashboard(body);
-    result.then((value) {
-      // listData = value.data.print(value);
-    }, onError: (error) {}).onError(
-      (error, stackTrace) {
-        print("error $error");
-      },
-    );
+  // Future<void> getDashBoard() async {
+  //   Map<String, dynamic> body = {
+  //     "user_id": "",
+  //     "billing_acc_id": "",
+  //     "date": "",
+  //     "status_order": "0001",
+  //     "page": 1,
+  //     "page_size": 10
+  //   };
+  //   final result = dashboardStatusRepository.getStatusDashboard(body);
+  //   result.then((value) {
+  //     // listData = value.data.print(value);
+  //   }, onError: (error) {}).onError(
+  //     (error, stackTrace) {
+  //       print("error $error");
+  //     },
+  //   );
+  // }
 
-    // Status2.fromJson({
-    //   "id": "22121912596",
-    //   "order_type_lkp": "1",
-    //   "order_type_lkp_name": "New",
-    //   "order_sub_type_lkp": "0",
-    //   "order_sub_type_lkp_name": "Null",
-    //   " customer_full_name": " ",
-    //   "customer_id": "B34B9104273960DCE05400144F67BEE6",
-    //   "ba_id": "E75CA99242E027B0E05400144F67BEE6",
-    //   "new_status": 1,
-    //   "provisioning": 0,
-    //   "billing": 0,
-    //   "complete": 0,
-    //   "total_items": 1,
-    //   "new_status_per": 100,
-    //   " provisioning_per": 0,
-    //   "billing_per": 0,
-    //   " complete_per": 0,
-    //   "result_count": 7681
-    // });
-  }
+  // Status2.fromJson({
+  //   "id": "22121912596",
+  //   "order_type_lkp": "1",
+  //   "order_type_lkp_name": "New",
+  //   "order_sub_type_lkp": "0",
+  //   "order_sub_type_lkp_name": "Null",
+  //   " customer_full_name": " ",
+  //   "customer_id": "B34B9104273960DCE05400144F67BEE6",
+  //   "ba_id": "E75CA99242E027B0E05400144F67BEE6",
+  //   "new_status": 1,
+  //   "provisioning": 0,
+  //   "billing": 0,
+  //   "complete": 0,
+  //   "total_items": 1,
+  //   "new_status_per": 100,
+  //   " provisioning_per": 0,
+  //   "billing_per": 0,
+  //   " complete_per": 0,
+  //   "result_count": 7681
+  // });
 
   Future<void> getOrderDashboard() async {
     Map<String, dynamic> body = {
@@ -153,7 +153,9 @@ class DashboardCountViewModel with ChangeNotifier {
       status2 = value.data;
       listItems = status2?.data?.items;
       notifyListeners();
-    }, onError: (error) {}).onError(
+    }, onError: (error) {
+      print("error $error");
+    }).onError(
       (error, stackTrace) {
         print("error $error");
       },
