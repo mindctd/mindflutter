@@ -404,7 +404,7 @@ class Inprogress3 extends StatelessWidget {
             .toDouble();
         double completeSum = viewModel.listItems!
             .fold(0, (sum, item) => sum + (item.complete ?? 0))
-            .toDouble();
+            .toDouble(); 
 
         //คำนวณผลรวม
         double totalSum =
